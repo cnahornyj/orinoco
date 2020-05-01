@@ -1,0 +1,87 @@
+body, nav {
+    padding:0;
+    margin:0;
+  }
+
+body {
+    background-color: #f3e6f1;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+ 
+header {
+    background: url(../images/texture-paper.png);
+    background-size: 180px 180px;
+    background-color: #7a685a;
+}
+
+nav {
+    width:100vw;
+    height:auto;
+    position:relative;
+    border:solid 0.75px #8f7b57;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+ul, li {
+    list-style-type:none;
+    text-decoration: none;
+}
+
+li {
+    width:auto;
+    margin:0 25px;
+}
+
+a {
+    margin: 0 200px 0 200px;
+}
+
+.one ul {
+    display:inline-flex;
+    justify-content:flex-end;
+}
+
+.logo-one {
+    height:50px;
+    width:50px;
+}
+
+.img_principale {
+    margin: auto;
+    text-align: center;
+    width: 10%;
+    height: 10%;
+}
+
+#banniere {
+    position: relative;
+    background-image: url(../images/oak-banniere.jpg);
+    background-repeat: no-repeat;
+    background-position: unset;
+    background-size: cover;
+    height: 18rem;
+}
+
+h1 {
+    margin: 0;
+    position: absolute;
+    top: 68%;
+    left: 16%;
+    transform: translateY(-50%);
+    color: #41372f;
+    font-size: 300%;
+    letter-spacing: 5px;
+}
+
+h2 {
+    margin: 0;
+    position: absolute;
+    top: 85%;
+    left: 16%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 200%;
+    letter-spacing: 5px;
+}
