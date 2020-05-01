@@ -8,7 +8,7 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
  
-header {
+header, footer {
     background: url(../images/texture-paper.png);
     background-size: 180px 180px;
     background-color: #7a685a;
@@ -67,7 +67,7 @@ h1 {
     left: 16%;
     transform: translateY(-50%);
     color: #41372f;
-    font-size: 300%;
+    font-size: 250%;
     letter-spacing: 5px;
 }
 
@@ -78,126 +78,70 @@ h2 {
     left: 16%;
     transform: translateY(-50%);
     color: white;
-    font-size: 200%;
+    font-size: 150%;
     letter-spacing: 5px;
 }
 
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    padding: 3% 0 3% 0;
-  }
-  
-  .card1 {
-    flex: 0 0 300px;
-    margin: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
-    height: 350px;
-    -webkit-filter: grayscale(80%);
-    filter: grayscale(80%);
-    -webkit-transition: .4s ease-in-out;
-    transition: .4s ease-in-out;
-    background-color: antiquewhite;
-  } 
-  
-  .card1:hover {
-    -webkit-filter: grayscale(0%);
-      filter: grayscale(0%);
-      -webkit-transition: .4s ease-in-out;
-      transition: .4s ease-in-out;
-  } 
-  
-  .card1 img {
-    max-width: 100%;
-  }
-  
-  .card1 .text {
-    padding: 0 20px 20px;
-  }
-  
-  .card1 .text > button {
-    background: white;
-    border: 1px solid #000;
-    border-radius: 2px;
-    color: black;
-    padding: 10px;
-    float: right;
-    }
-  
-  .card2 {
-    flex: 0 0 300px;
-    margin: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
-    height: 350px;
-    -webkit-filter: grayscale(80%);
-      filter: grayscale(80%);
-      -webkit-transition: .4s ease-in-out;
-      transition: .4s ease-in-out;
-      background-color: antiquewhite;
-  }
-  
-  .card2:hover {
-    -webkit-filter: grayscale(0%);
-      filter: grayscale(0%);
-      -webkit-transition: .4s ease-in-out;
-      transition: .4s ease-in-out;
-  }
-  
-  .card2 img {
-    max-width: 100%;
-  }
-  
-  .card2 .text {
-    padding: 0 20px 20px;
-  }
-  
-  .card2 .text > button {
-    background: white;
-    border: 1px solid #000;
-    border-radius: 2px;
-    color: black;
-    margin-top: 18px;
-    padding: 10px;
-    float: right;
-    }
-  
-  .card3 {
-    flex: 0 0 300px;
-    margin: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
-    height: 350px;
-    -webkit-filter: grayscale(80%);
-    filter: grayscale(80%);
-    -webkit-transition: .4s ease-in-out;
-    transition: .4s ease-in-out;
-    background-color: antiquewhite;
-  } 
-  
-  .card3:hover {
-    -webkit-filter: grayscale(0%);
-    filter: grayscale(0%);
-    -webkit-transition: .4s ease-in-out;
-    transition: .4s ease-in-out;
-  }
-  
-  .card3 img {
-    max-width: 100%;
-  }
-  
-  .card3 .text {
-    padding: 0 20px 20px;
-  }
-  
-  .card3 .text > button {
-    background: white;
-    border: 1px solid #000;
-    border-radius: 2px;
-    color: black;
-    padding: 10px;
-    float: right;
-    }
+#products {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 68%;
+}
+
+.product {
+  margin: 3% 0 3% 0;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
+  display: flex;
+  -webkit-filter: grayscale(60%);
+  filter: grayscale(60%);
+  -webkit-transition: .4s ease-in-out;
+  transition: .4s ease-in-out;
+  background-color: beige;
+}
+
+.product:hover {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+}
+
+.img_article {
+  width: 350px;
+  height: 250px;
+  padding: 2%;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  font-size: 125%;
+}
+
+.price {
+  font-size: 150%;
+  width: 20%;
+  padding-right: 2%;
+  text-align: right;
+}
+
+button {
+  position: relative;
+  top: 130px;
+  font-size: 70%;
+  border: 1px solid #a6b9ac;
+  border-radius: 18px;
+  padding: 15px;
+  background-color: #afbcb3;
+  transform: scale(1);
+  transition-property: scale();
+  transition-duration: 2s;
+  transition-delay: 0.2s;
+}
+
+button:hover {
+  background-color: #9bbba4;
+  transform: scale(1.15);
+}
