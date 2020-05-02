@@ -60,7 +60,7 @@ li {
     height: 18rem;
 }
 
-h1 {
+#titre {
     margin: 0;
     position: absolute;
     top: 68%;
@@ -71,7 +71,7 @@ h1 {
     letter-spacing: 5px;
 }
 
-h2 {
+#selection {
     margin: 0;
     position: absolute;
     top: 85%;
@@ -92,7 +92,7 @@ h2 {
 }
 
 .product {
-  margin: 3% 0 3% 0;
+  margin: 2% 0 2% 0;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
   display: flex;
@@ -137,7 +137,7 @@ button {
   background-color: #afbcb3;
   transform: scale(1);
   transition-property: scale();
-  transition-duration: 2s;
+  transition-duration: 1.25s;
   transition-delay: 0.2s;
 }
 
@@ -145,3 +145,48 @@ button:hover {
   background-color: #9bbba4;
   transform: scale(1.15);
 }
+
+form {
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
+  width: 40%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 2%;
+  background-color: #fcfdfd;
+  line-height: 1.5;
+}
+
+form p, h1, h2 {
+  color: #41372f;
+  margin-left: 2%;
+}
+
+form p input {
+  border: 0.5px solid #ccc;
+  border-radius: 20px;
+  padding: 1%;
+  margin: 1% 0 1% 0;
+  width: 95%;
+}
+
+.submit {
+  background-color: #41372f;
+  color: white;
+  border: 1px solid #322b25;
+  border-radius: 20px;
+  font-size: 100%;
+  margin: 1.5%;
+  padding: 2.5% 4% 2.5% 4%;
+  letter-spacing: 1.25px;
+}
+
+#buttons {
+  margin: 5% 0 2% 155px;
+}
+
+
+
+
+
