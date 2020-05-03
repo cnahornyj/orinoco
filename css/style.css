@@ -4,7 +4,7 @@ body, nav {
   }
 
 body {
-    background-color: #f3e6f1;
+    background-color: #f3f2e8;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
  
@@ -58,6 +58,7 @@ li {
     background-position: unset;
     background-size: cover;
     height: 18rem;
+    border-bottom: 1px solid #85724e;
 }
 
 #titre {
@@ -100,7 +101,7 @@ li {
   filter: grayscale(60%);
   -webkit-transition: .4s ease-in-out;
   transition: .4s ease-in-out;
-  background-color: beige;
+  background-color: #9e752540;
 }
 
 .product:hover {
@@ -169,6 +170,7 @@ form p input {
   padding: 1%;
   margin: 1% 0 1% 0;
   width: 95%;
+  background-color: #9e762525;
 }
 
 .submit {
@@ -180,6 +182,18 @@ form p input {
   margin: 1.5%;
   padding: 2.5% 4% 2.5% 4%;
   letter-spacing: 1.25px;
+  transform: scale(1);
+  transition-property: scale();
+  transition-duration: 1.25s;
+  transition-delay: 0.2s;
+}
+
+.submit:hover {
+  background-color: #9bbba4;
+  border: 1px solid #83a08b;
+  color: #41372f;
+  font-weight: bold;
+  transform: scale(1.15);
 }
 
 #buttons {

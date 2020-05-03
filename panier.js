@@ -26,7 +26,7 @@ document.getElementById("email").addEventListener("blur", function (e) {
     var regexCourriel = /.+@.+\..+/;
     var validiteCourriel = "";
     if (!regexCourriel.test(e.target.value)) {
-        validiteCourriel = "Adresse invalide";
+        validiteCourriel = "Adresse mail invalide";
     }
     document.getElementById("aideEmail").textContent = validiteCourriel;
 });
