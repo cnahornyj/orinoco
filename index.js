@@ -1,26 +1,44 @@
-// Afficher les données de l'API dans la console
-
-// var req = new XMLHttpRequest();
-// La requête est asynchrone lorsque le 3ème paramètre vaut true ou est absent
-// req.open("GET", "http://localhost:3000/api/furniture/");
-// Gestion de l'événement indiquant la fin de la requête
-//req.addEventListener("load", function () {
-    // Affiche la réponse reçue pour la requête
-    // console.log(req.responseText);
-// });
-// req.send(null);
-
 ajaxGet("http://localhost:3000/api/furniture/", function (reponse) {
-    // Séparation du texte pour obtenir un tableau contenant les langages
-    var products = reponse.split(";");
-    var listeElt = document.getElementById("products"); 
-    // Ajout de chaque langage dans la liste
+    // Transforme la réponse en tableau d'objets JavaScript
+    var products = JSON.parse(reponse);
+    var listElt = document.getElementById("products");
+    // Afficher les meubles et leurs caractéristiques
     products.forEach(function (product) {
-        var productElt = document.createElement("p");
-        productElt.textContent = product;
-        productElt.setAttribute('class','product')
-        listeElt.appendChild(productElt);
-    });
-});
+        // Création d'articles de class "product"
+        var article = document.createElement("article"); // Création d'articles
+        article.classList.add("product"); // Add classe "product" aux articles
+        listElt.appendChild(article); // Rendre les articles enfants de la section "products"
 
-// COMMENT AVOIR ACCES AUX ELEMENTS DU TABLEAU DE PRODUCTS ?
+        // Création des images de class "img_article" dans article dans les articles
+        var productImage = document.createElement("IMG");
+        productImage.classList.add("img_article");
+        productImage.src = product.imageUrl;
+        article.appendChild(productImage);
+
+        var divDescription = document.createElement("div"); // Création des éléments div
+        divDescription.classList.add("description"); // Add une classe description sur les éléments div
+        article.appendChild(divDescription);
+
+        var productName = document.createElement("p");
+        divDescription.appendChild(productName);
+        productName.classList.add("name");
+        productName.textContent = product.name;
+
+        var productDescription = document.createElement("p");
+        divDescription.appendChild(productDescription);
+        divDescription.classList.add("text_description");
+        productDescription.textContent = product.description;
+
+        var divPrice = document.createElement("div"); // Création des éléments div
+        divPrice.classList.add("price"); // Add une classe description sur les éléments div
+        article.appendChild(divPrice);
+
+        var productPrice = document.createElement("p");
+        divPrice.appendChild(productPrice);
+        productPrice.textContent = product.price + ",00€";
+
+        var productButton = document.createElement("button");
+        divPrice.appendChild(productButton);
+        productButton.textContent = "Sélectionner";
+    })
+});
