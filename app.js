@@ -1,3 +1,6 @@
+
+// CODE SOURCE
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -36,3 +39,5 @@ app.use('/api/teddies', teddyRoutes);
 app.use('/api/furniture', furnitureRoutes);
 
 module.exports = app;
+
+// CODE SOURCE

@@ -1,3 +1,5 @@
+// Récupérer les données de l'API avec AJAX
+/*
 function ajaxGet(url, callback) {
     var req = new XMLHttpRequest();
     req.open("GET", url);
@@ -14,3 +16,4 @@ function ajaxGet(url, callback) {
     });
     req.send(null);
 }
+*/

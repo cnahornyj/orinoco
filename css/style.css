@@ -83,7 +83,7 @@ li {
     letter-spacing: 5px;
 }
 
-#products {
+#produits {
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -117,7 +117,7 @@ li {
   border: 1px solid #c6c4c0;
 }
 
-.description {
+.bloc_gauche {
   display: flex;
   flex-direction: column;
   font-size: 125%;
@@ -125,22 +125,22 @@ li {
   margin-left: 1%;
 }
 
-.text_description {
+.texte_nom {
+  border-bottom: 1px solid beige;
+}
+
+.texte_description {
   text-align: justify;
 }
 
-.price {
+.bloc_droit {
   font-size: 150%;
   width: 24%;
   padding-right: 2%;
   text-align: right;
 }
 
-.name {
-  border-bottom: 1px solid beige;
-}
-
-button {
+.selection {
   position: relative;
   top: 130px;
   font-size: 70%;
@@ -154,7 +154,7 @@ button {
   transition-delay: 0.2s;
 }
 
-button:hover {
+.selection:hover {
   background-color: #9bbba4;
   transform: scale(1.15);
 }
@@ -210,6 +210,51 @@ form p input {
 
 #buttons {
   margin: 5% 0 2% 155px;
+}
+
+/* Page produit par ID */
+
+#produit {
+  display: flex;
+  width: 55%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 1px solid #ccc;
+  background-color: beige;
+}
+
+/*
+#photo {
+  border: 1px solid #ccc;
+}*/
+
+#size_image {
+  width: 550px;
+}
+
+#description {
+  padding: 2.5%;
+}
+
+button {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 50%;
+  border: 1px solid #a6b9ac;
+  border-radius: 18px;
+  padding: 15px;
+  background-color: #afbcb3;
+  transform: scale(1);
+  transition-property: scale();
+  transition-duration: 1.25s;
+  transition-delay: 0.2s;
+  margin-top: 65%;
+  margin-left: 3%;
+}
+
+button:hover {
+  background-color: #9bbba4;
+  transform: scale(1.15);
 }
 
 
