@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="../css/all.min.css">
 
-    <title>Orinoco - Meubles en chêne</title>
-
+    <title>Produit</title>
 </head>
 <body>
     <header>
         <nav class="one">
-            <a href="index.html"><img src="images/orinoco.svg"/></a>
+            <a href="index.html"><img src="../images/orinoco.svg"/></a>
             <ul>
                 <li><a href="panier.html"><i class="fas fa-shopping-bag fa-2x" style="color:#fff;"></i></a></li>
             </ul>
@@ -24,7 +23,21 @@
         <h1 id="titre">Meubles en chêne</h1>
         <h2 id="selection">Une sélection de produits</h2>
     </div>
-    <section id="produits"> 
+    <section id="produit">
+        <div id='photo'>
+            <img src="../images/oak_1.jpg" id="size_image">
+        </div>
+        <div id='description'>
+            <p>€ ,OO</p>
+            <h3>Nom du produit</h3>
+            <p>Description du produit</p>
+            <label for="color-select">Couleur</label>
+            <select name="colors" id="color-select">
+                <option value="red">Rouge</option>
+                <option value="blue">Bleu</option>
+            </select>
+            <button><i class="fas fa-shopping-bag fa-2x" style="color:#000;"> Ajouter au panier</i></button>
+        </div>
     </section>
     <footer>
         <nav class="one">
