@@ -23,22 +23,12 @@
         <h1 id="titre">Meubles en chêne</h1>
         <h2 id="selection">Une sélection de produits</h2>
     </div>
-    <section id="produit">
-        <div id='photo'>
-            <img src="../images/oak_1.jpg" id="size_image">
-        </div>
-        <div id='description'>
-            <p>€ ,OO</p>
-            <h3>Nom du produit</h3>
-            <p>Description du produit</p>
-            <label for="color-select">Couleur</label>
-            <select name="colors" id="color-select">
-                <option value="red">Rouge</option>
-                <option value="blue">Bleu</option>
-            </select>
-            <button><i class="fas fa-shopping-bag fa-2x" style="color:#000;"> Ajouter au panier</i></button>
-        </div>
-    </section>
+    <main id="main">
+		<!--<div id="error">
+			<i id="error_logo" class="fas fa-exclamation-triangle fa-5x"></i>
+			<p id="error_message">Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer</p>
+		</div>-->
+	</main>
     <footer>
         <nav class="one">
             <ul>
@@ -49,6 +39,7 @@
             </ul>
         </nav>
     </footer>
-    <script src="index.js"></script>
+    <script src="../js/index.js"></script>
+    <script>getProduct()</script>
 </body>
 </html>
