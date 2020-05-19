@@ -41,7 +41,21 @@ fetch(url)
         lienArticle.href = "produit.html?" + product._id;
     });
 })
-.catch(error => console.log("Erreur : " + error))
+.catch((error) => {
+    let sectionError = document.getElementById("error");
+
+    let icon = document.createElement("i");
+    let message = document.createElement("p");
+
+    sectionError.appendChild(icon);
+    sectionError.appendChild(message);
+
+    icon.setAttribute("id","error_logo");
+    icon.setAttribute("class", "fas fa-exclamation-triangle fa-5x");
+    message.setAttribute("id","error_message");
+    
+    message.textContent = "Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer"
+})
 
 function getProduct(){
     let id = location.search.substring(1); 
@@ -60,7 +74,6 @@ function getProduct(){
         let descriptionProduct = document.createElement("p");
         let label = document.createElement("label");
         let selectColor = document.createElement("select");
-        // let optionValue = document.createElement("option");
         let price = document.createElement("p");
 
         sectionProduit.appendChild(bloc);

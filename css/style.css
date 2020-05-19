@@ -1,81 +1,81 @@
 body, nav {
-    padding:0;
-    margin:0;
+  padding:0;
+  margin:0;
   }
 
 body {
-    background-color: #f3f2e8;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #f3f2e8;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
  
 header, footer {
-    background: url(../images/texture-paper.png);
-    background-size: 180px 180px;
-    background-color: #7a685a;
+  background: url(../images/texture-paper.png);
+  background-size: 180px 180px;
+  background-color: #7a685a;
 }
 
 nav {
-    width:100vw;
-    height:auto;
-    position:relative;
-    border:solid 0.75px #8f7b57;
-    display:flex;
-    align-items:center;
-    justify-content: space-around;
+  width:100vw;
+  height:auto;
+  position:relative;
+  border:solid 0.75px #8f7b57;
+  display:flex;
+  align-items:center;
+  justify-content: space-around;
 }
 
 ul, li {
-    list-style-type:none;
-    text-decoration: none;
+  list-style-type:none;
+  text-decoration: none;
 }
 
 li {
-    width:auto;
-    margin:0 25px;
+  width:auto;
+  margin:0 25px;
 }
 
 .one ul {
-    display:inline-flex;
-    justify-content:flex-end;
+  display:inline-flex;
+  justify-content:flex-end;
 }
 
 #banniere {
-    position: relative;
-    background-image: url(../images/oak-banniere.jpg);
-    background-repeat: no-repeat;
-    background-position: unset;
-    background-size: cover;
-    height: 18rem;
-    border-bottom: 1px solid #85724e;
+  position: relative;
+  background-image: url(../images/oak-banniere.jpg);
+  background-repeat: no-repeat;
+  background-position: unset;
+  background-size: cover;
+  height: 18rem;
+  border-bottom: 1px solid #85724e;
 }
 
 #titre {
-    margin: 0;
-    position: absolute;
-    top: 68%;
-    left: 16%;
-    transform: translateY(-50%);
-    color: #41372f;
-    font-size: 250%;
-    letter-spacing: 5px;
+  margin: 0;
+  position: absolute;
+  top: 68%;
+  left: 16%;
+  transform: translateY(-50%);
+  color: #41372f;
+  font-size: 250%;
+  letter-spacing: 5px;
 }
 
 #selection {
-    margin: 0;
-    position: absolute;
-    top: 85%;
-    left: 16%;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 150%;
-    letter-spacing: 5px;
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 16%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 150%;
+  letter-spacing: 5px;
 }
 
 #produits {
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-top: 5%;
+  margin-top: -5%;
   margin-bottom: 5%;
   width: 68%;
   color: #494133;
@@ -163,7 +163,7 @@ form {
   margin: auto;
   margin-top: 5%;
   margin-bottom: 5%;
-  padding: 5%;
+  padding: 1%;
   background-color: #E2DFD3;
   color: #5D4F40;
   line-height: 1.5;
@@ -176,6 +176,15 @@ form p input {
   margin: 1% 0 1% 0;
   width: 95%;
   background-color: #9e762525;
+}
+
+#coordonnees {
+  font-size: 150%;
+  margin-left: 2%;
+}
+
+.formulaire_label {
+  font-size: 115%;
 }
 
 .submit {
@@ -202,7 +211,7 @@ form p input {
 }
 
 #buttons {
-  margin: 5% 0 2% 155px;
+  margin: 5% 0 2% 110px;
 }
 
 /* Page produit par ID */
@@ -228,10 +237,9 @@ form p input {
   border: 0.75px solid #f3f2e8;
 }
 
-/*
 #error {
   margin: auto;
-  margin-top: 5%;
+  margin-top: 10%;
   margin-bottom: 10%;
   text-align: center;
   width: 30%;
@@ -253,6 +261,7 @@ form p input {
   90%      { color: red; }
 }
 
+/*
 table {
 border-collapse: collapse;
 width: 450px;

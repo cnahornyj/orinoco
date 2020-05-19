@@ -19,51 +19,33 @@
             </ul>
         </nav>
     </header>
-
         <form>
-            <h1><i class="fas fa-address-card"></i> Vos coordonnées</h1>
-            <p>
-                <label for="nom">Nom</label><br/>
-                <input type="text" name="nom" id="nom" required><br/>
-                <span id="aideNom"></span>
-            </p>
-            <p>
+            <h1 id="coordonnees"><i class="fas fa-address-card"></i> Vos coordonnées</h1>
+            <p class="formulaire_label">
                 <label for="prenom">Prénom</label><br/>
                 <input type="text" name="prenom" id="prenom" required><br/>
                 <span id="aidePrenom"></span>
             </p>
-            <p>
-                <label for="email">Email</label><br/>
-                <input type="email" name="email" id="email" required><br/>
-                <span id="aideEmail"></span>
+             <p class="formulaire_label">
+                <label for="nom">Nom</label><br/>
+                <input type="text" name="nom" id="nom" required><br/>
+                <span id="aideNom"></span>
             </p>
-            <p>
-                <label for="telephone">Téléphone</label><br/>
-                <input type="number" name="telephone" id="telephone"><br/>
-                <span id="aideTelephone"></span> <!-- A VOIR -->
-            </p>
-            <h2><i class="fas fa-home"></i> Votre adresse</h2>
-            <p>
+             <p class="formulaire_label">
                 <label for="adresse">Rue</label><br/>
                 <input type="text" name="adresse" id="adresse"><br/>
                 <span id="aideAdresse"></span>
             </p>
-            <p>
-                <label for="codepostal">Code postal</label><br/>
-                <input type="number" name="codepostal" id="codepostal"><br/>
-                <span id="aideCodepostal"></span> <!-- A VOIR -->
-            </p>
-            <p>
+             <p class="formulaire_label">
                 <label for="ville">Ville</label><br/>
                 <input type="text" name="ville" id="ville"><br/>
                 <span id="aideVille"></span> <!-- A VOIR -->
             </p>
-            <p>
-                <label for="pays">Pays</label><br/>
-                <input type="text" name="pays" id="pays"><br/>
-                <span id="aidePays"></span> <!-- A VOIR -->
-            </p>
-            
+             <p class="formulaire_label">
+                <label for="email">Email</label><br/>
+                <input type="email" name="email" id="email" required><br/>
+                <span id="aideEmail"></span>
+            </p>      
             <div id="buttons">
                 <input type="submit" value="ENVOYER" class="submit">
                 <input type="reset" value="ANNULER" class="submit">
