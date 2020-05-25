@@ -136,6 +136,10 @@ li {
   font-size: 85%;
 }
 
+#price_product {
+  font-size: 125%;
+}
+
 .selection {
   position: relative;
   top: 130px;
@@ -246,7 +250,7 @@ color: white;
 border: 1px solid #322b25;
 border-radius: 20px;
 font-size: 100%;
-margin: 1.5%;
+margin: 8% 0 0 40%;
 padding: 2.5% 4% 2.5% 4%;
 transform: scale(1);
 transition-property: scale();
@@ -262,27 +266,27 @@ transform: scale(1.15);
 }
 
 #error {
-  margin: auto;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  text-align: center;
-  width: 30%;
+margin: auto;
+margin-top: 3%;
+margin-bottom: 3%;
+text-align: center;
+width: 30%;
 }
 
 #error_message {
-  font-size: 125%;
-  line-height: 32px;
+font-size: 125%;
+line-height: 32px;
 }
 
 #error_logo {
-  color: rgb(250, 121, 121);
-  animation: alertError 2000ms infinite;
+color: rgb(250, 121, 121);
+animation: alertError 2000ms infinite;
 }
 
 @keyframes alertError {
-  from, to { color: rgb(250, 121, 121); }
-  50%      { color: rgb(250, 65, 65); }
-  90%      { color: red; }
+from, to { color: rgb(250, 121, 121); }
+50%      { color: rgb(250, 65, 65); }
+90%      { color: red; }
 }
 
 /* Page du panier */
@@ -352,17 +356,24 @@ padding: 0.50%;
 }
 
 #envoiPost {
-background-color: #41372f;
 color: white;
-border: 1px solid #322b25;
+background-color: #5D4F40;
+border: 1px solid #55483b;
 border-radius: 20px;
-font-size: 90%;
+font-size: 110%;
 margin: 1.5%;
-margin-left: 21%;
+margin-left: 13%;
 padding: 2.5% 4% 2.5% 4%;
 transform: scale(1);
 transition-property: scale();
 transition-duration: 1.25s;
 transition-delay: 0.2s;
-width: 60%;
+width: 75%;
+}
+
+#envoiPost:hover{
+background-color: #9bbba4;
+border: 1px solid #83a08b;
+color: #41372f;
+transform: scale(1.15);    
 }
