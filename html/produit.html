@@ -24,11 +24,22 @@
         <h2 id="selection">Une sélection de produits</h2>
     </div>
     <main id="main">
-		<!--<div id="error">
-			<i id="error_logo" class="fas fa-exclamation-triangle fa-5x"></i>
-			<p id="error_message">Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer</p>
-		</div>-->
-	</main>
+        <section id="section">
+            <div id="photo_product">
+                <img src="#" id="img_product" alt="Photo du produit">
+            </div>
+            <div id="description">
+                <h2 id="name_product"></h2>
+                <p id="description_product"></p>
+                <label>Choisir une couleur</label>
+                <select name="option" id="option_select">
+                    <option value="">Sélectionner</option>
+                </select>
+                <p id="price_product"></p>
+                <button id="ajouterProduitPanier">Ajouter au panier</button>
+            </div>
+        </section>
+    </main>
     <footer>
         <nav class="one">
             <ul>
@@ -39,7 +50,8 @@
             </ul>
         </nav>
     </footer>
-    <script src="../js/index.js"></script>
-    <script>getProduct()</script>
+    <script src="../js/test.js"></script>
+    <script>detailProduit()</script>
+    <script>addPanier()</script>
 </body>
 </html>

@@ -19,37 +19,56 @@
             </ul>
         </nav>
     </header>
-        <form>
-            <h1 id="coordonnees"><i class="fas fa-address-card"></i> Vos coordonnées</h1>
-            <p class="formulaire_label">
-                <label for="prenom">Prénom</label><br/>
-                <input type="text" name="prenom" id="prenom" required><br/>
-                <span id="aidePrenom"></span>
-            </p>
-             <p class="formulaire_label">
-                <label for="nom">Nom</label><br/>
-                <input type="text" name="nom" id="nom" required><br/>
-                <span id="aideNom"></span>
-            </p>
-             <p class="formulaire_label">
-                <label for="adresse">Rue</label><br/>
-                <input type="text" name="adresse" id="adresse"><br/>
-                <span id="aideAdresse"></span>
-            </p>
-             <p class="formulaire_label">
-                <label for="ville">Ville</label><br/>
-                <input type="text" name="ville" id="ville"><br/>
-                <span id="aideVille"></span> <!-- A VOIR -->
-            </p>
-             <p class="formulaire_label">
-                <label for="email">Email</label><br/>
-                <input type="email" name="email" id="email" required><br/>
-                <span id="aideEmail"></span>
-            </p>      
-            <div id="buttons">
-                <input type="submit" value="ENVOYER" class="submit">
-                <input type="reset" value="ANNULER" class="submit">
-            </div>
-        </form>
-        <script src="../js/panier.js"></script>
+    <main id="basket">
+		<div id="basket-resume">
+			<p id="panier_vide">Votre panier est vide</p>
+		</div>
+		<div class="form">
+			<form method="post" name="form-panier">
+				<fieldset>
+					<legend>Civilité</legend>
+					<div class="form__group">
+						<div class="form__group">
+							<label for="formNom">Nom</label></br>
+							<input type="text" id="formNom" required name="formNom">
+						</div>
+						<div class="form__group">
+							<label for="formPrenom" class="right-inline">Prénom</label></br>
+							<input type="text" id="formPrenom" required name="formPrenom">
+						</div>
+					</div>
+				</fieldset> 
+				<fieldset>
+					<legend>Coordonnées</legend>
+					<div class="form__group">
+						<label for="formMail">E-mail</label></br>
+						<input type="email" id="formMail" required name="formMail">
+					</div>
+					<div class="form__group">
+						<label for="formAdresse">Adresse</label></br>
+						<input type="text" id="formAdresse" required name="formAdresse">
+					</div>
+					<div class="form__group">
+						<label for="formVille">Ville</label></br>
+						<input type="text" id="formVille" required name="formVille">
+					</div>
+				</fieldset> 
+				<input type="button" value="Je valide mon panier et mes informations" id="envoiPost">
+			</form>
+		</div>
+	</main>
+    <footer>
+        <nav class="one">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-lock fa-2x" style="color:#fff;"></i></a></li>
+            </ul>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-truck fa-2x" style="color:#fff;"></i></a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script src="../js/test.js"></script>
+    <script>
+		addition();
+	</script>
 </body>

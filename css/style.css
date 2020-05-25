@@ -146,14 +146,13 @@ li {
   padding: 15px;
   background-color: #afbcb3;
   transform: scale(1);
-  transition-property: scale();
   transition-duration: 1.25s;
   transition-delay: 0.2s;
 }
 
 .selection:hover {
   background-color: #9bbba4;
-  transform: scale(1.15);
+  transform: scale(2);
 }
 
 form {
@@ -195,7 +194,6 @@ form p input {
   font-size: 100%;
   margin: 1.5%;
   padding: 2.5% 4% 2.5% 4%;
-  letter-spacing: 1.25px;
   transform: scale(1);
   transition-property: scale();
   transition-duration: 1.25s;
@@ -206,7 +204,6 @@ form p input {
   background-color: #9bbba4;
   border: 1px solid #83a08b;
   color: #41372f;
-  font-weight: bold;
   transform: scale(1.15);
 }
 
@@ -216,7 +213,7 @@ form p input {
 
 /* Page produit par ID */
 
-#produit {
+#section {
   display: flex;
   width: 55%;
   margin: auto;
@@ -235,6 +232,33 @@ form p input {
   width: 450px;
   height: 350px;
   border: 0.75px solid #f3f2e8;
+}
+
+#option_select {
+border: 1px solid #ccc;
+border-radius: 15px;
+padding: 2%;
+}
+
+#ajouterProduitPanier {
+background-color: #41372f;
+color: white;
+border: 1px solid #322b25;
+border-radius: 20px;
+font-size: 100%;
+margin: 1.5%;
+padding: 2.5% 4% 2.5% 4%;
+transform: scale(1);
+transition-property: scale();
+transition-duration: 1.25s;
+transition-delay: 0.2s;  
+}
+
+#ajouterProduitPanier:hover{
+background-color: #9bbba4;
+border: 1px solid #83a08b;
+color: #41372f;
+transform: scale(1.15);  
 }
 
 #error {
@@ -261,7 +285,8 @@ form p input {
   90%      { color: red; }
 }
 
-/*
+/* Page du panier */
+
 table {
 border-collapse: collapse;
 width: 450px;
@@ -301,9 +326,43 @@ justify-content: center;
 margin: 3% 0 5% 0;
 }
 
+#basket-resume {
+margin-right: 5%;
+}
+
 .annulerProduit {
 margin-left: 100%;
 margin-top: 50%;
 color: #443a2f;
 }
-*/
+
+fieldset {
+margin: 3%;
+}
+
+.form__group {
+margin: 2%;
+}
+
+input {
+width: 98%;
+border: 1px solid #ccc;
+border-radius: 15px;
+padding: 0.50%;
+}
+
+#envoiPost {
+background-color: #41372f;
+color: white;
+border: 1px solid #322b25;
+border-radius: 20px;
+font-size: 90%;
+margin: 1.5%;
+margin-left: 21%;
+padding: 2.5% 4% 2.5% 4%;
+transform: scale(1);
+transition-property: scale();
+transition-duration: 1.25s;
+transition-delay: 0.2s;
+width: 60%;
+}

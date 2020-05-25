@@ -1,5 +1,8 @@
 const url = 'http://localhost:3000/api/furniture/';
 
+/* Récupération des données de l'API et affichage de la liste des produits sur la page d'accueil OU
+message d'erreur */
+
 fetch(url)
 .then((res) => res.json())
 .then((data) => {
@@ -57,15 +60,18 @@ fetch(url)
     message.textContent = "Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer"
 })
 
+// Affichage de la page de description d'un produit grâce aux paramètres de l'URL
+
 function getProduct(){
     let id = location.search.substring(1); 
-    console.log(id);
+    // console.log(id);
     fetch(url + id)
     .then(res => res.json())
     .then((data) => {
-        // console.log(data);
+        console.log(`Le produit affiché est ${data.name}.`);
         let sectionProduit = document.getElementById("main");
 
+        // Création du HTML
         let bloc = document.createElement("section");
         let blocPhoto = document.createElement("div");
         let photo = document.createElement("img");
@@ -75,7 +81,9 @@ function getProduct(){
         let label = document.createElement("label");
         let selectColor = document.createElement("select");
         let price = document.createElement("p");
+        let addBasket = document.createElement("button");
 
+        // Hiérarchie dans les éléments créés
         sectionProduit.appendChild(bloc);
         bloc.appendChild(blocPhoto);
         blocPhoto.appendChild(photo);
@@ -85,26 +93,84 @@ function getProduct(){
         blocDescription.appendChild(label);
         blocDescription.appendChild(selectColor);
         blocDescription.appendChild(price);
+        blocDescription.append(addBasket);
 
+        // Attribution des id et classes
         bloc.setAttribute("id","produit");
         blocPhoto.setAttribute("id","photo_product");
         photo.setAttribute("id","img_product");
         blocDescription.setAttribute("id","description");
 
+        // Remplissage du contenu des balises
         photo.src = data.imageUrl;
         nameProduct.textContent = data.name;
         descriptionProduct.textContent = "Description : " + data.description;
         price.textContent = data.price/100 + ",00€";
         label.textContent = "Choisir une couleur ";
+        addBasket.textContent = "Ajouter au panier";
+        // addBasket.addEventListener = ("click", addPanier());
 
         data.varnish.forEach(function(color) {
-            console.log(color);
+            // console.log(color);
             let options = document.createElement('option');
             selectColor.appendChild(options);
             options.textContent = color;
-          }); 
+          });
     })
     .catch(function(error) {
         console.log('Il y a eu un problème avec fetch: ' + error.message);
     });
 }
+
+// Initialisation du localStorage
+ if(localStorage.getItem("userPanier")){
+	console.log("Administration : le panier de l'utilisateur existe dans le localStorage");
+} else {
+	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
+  	//Le panier est un tableau de produits
+  	let panierInit = [];
+  	localStorage.setItem("userPanier", JSON.stringify(panierInit));
+};
+
+/*
+let userPanier = JSON.parse(localStorage.getItem("userPanier"));
+
+let furniture = {
+    name: 'Clara',
+    price: 3445,
+    id: 'baaaed67'
+}
+
+console.log(furniture);
+
+let furniture_serialized = JSON.stringify(furniture);
+
+console.log(furniture_serialized);
+
+localStorage.setItem("userPanier", furniture_serialized);
+*/
+
+/*
+let furnituree = {
+    name: 'Alexis',
+    price: 3445,
+    id: 'baaarx67'
+}
+
+console.log(furnituree);
+
+let furnituree_serialized = JSON.stringify(furnituree);
+
+console.log(furnituree_serialized);
+
+localStorage.setItem("userPanier", furniture_serialized);
+*/
+
+
+
+
+
+// Initialiser un localstorage avec un tableau vide
+// Au clic sur le bouton "Ajouter au panier" push un objet furniture avec nom et prix dans le tableau
+// Persistance des données
+
