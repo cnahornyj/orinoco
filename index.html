@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="css/all.min.css">
-
     <title>Orinoco - Meubles en chêne</title>
-
 </head>
 <body>
     <header>
-        <nav class="one">
+        <nav>
             <a href="index.html"><img src="images/orinoco.svg"/></a>
             <ul>
                 <li><a href="panier.html"><i class="fas fa-shopping-bag fa-2x" style="color:#fff;"></i></a></li>
@@ -21,14 +17,15 @@
         </nav>
     </header>
     <div id="banniere">
-        <h1 id="titre">Meubles en chêne</h1>
-        <h2 id="selection">Une sélection de produits</h2>
+        <h1>Meubles en chêne</h1>
+        <h2>Une sélection de produits</h2>
     </div>
-    <div id="error"></div>
-    <main id='main'></main>
-    <!--<section id="produits"></section>-->
+    <div id="error">
+    </div>
+    <main id='main'>
+    </main>
     <footer>
-        <nav class="one">
+        <nav>
             <ul>
                 <li><a href="index.html"><i class="fas fa-lock fa-2x" style="color:#fff;"></i></a></li>
             </ul>
@@ -38,6 +35,7 @@
         </nav>
     </footer>
     <script src="js/test.js"></script>
+    <script>getProduits()</script>
     <script>allProductsList()</script>
 </body>
 </html>

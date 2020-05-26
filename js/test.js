@@ -1,4 +1,4 @@
-const produitSell = "furniture"  //Au choix entre : "cameras" - "furniture" - "teddies"
+const produitSell = "furniture";
 const APIURL = "http://localhost:3000/api/" + produitSell + "/";
 
 let idProduit = "";
@@ -19,8 +19,8 @@ let products = [];
 //L'user a maintenant un panier
 let userPanier = JSON.parse(localStorage.getItem("userPanier"));
 
-getProduits = () =>{
-	return new Promise((resolve) =>{
+getProduits = () => {
+	return new Promise((resolve) => {
 		let request = new XMLHttpRequest();
 		request.onreadystatechange = function() {
 			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
@@ -28,8 +28,23 @@ getProduits = () =>{
 				resolve(JSON.parse(this.responseText));
 				console.log("Administration : connection ok");
                 console.log(this.responseText);
-			}else{
-				console.log("Administration : ERROR connection API");
+                let sectionError = document.getElementById("error");
+                sectionError.remove();
+			} else {
+				let sectionError = document.getElementById("error");
+
+                let icon = document.createElement("i");
+                let message = document.createElement("p");
+
+                sectionError.appendChild(icon);
+                sectionError.appendChild(message);
+
+                icon.setAttribute("id","error_logo");
+                icon.setAttribute("class", "fas fa-exclamation-triangle fa-5x");
+                message.setAttribute("id","error_message");
+                
+                message.textContent = "Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer";
+                console.log("Problème avec l'API");
 			}
 		}
 		request.open("GET", APIURL + idProduit);
@@ -37,14 +52,12 @@ getProduits = () =>{
 	});
 };
 
-// getProduits();
-
 async function allProductsList(){
     const produits = await getProduits();
 
     //Création de la section accueillant la liste des produits
     let listProduct = document.createElement("section");
-    listProduct.setAttribute("class", "list-product");
+    listProduct.setAttribute("id", "list-articles");
     //Ajout de la section dans le HTML
     let main = document.getElementById("main");
     main.appendChild(listProduct);
@@ -62,14 +75,14 @@ async function allProductsList(){
         let prix = document.createElement("p");
         let lienArticle = document.createElement("a");
         // Attribution des classes
-        bloc.setAttribute("class","produit");
+        bloc.setAttribute("class","article");
         imageArticle.setAttribute("class", "img_article");
         blocGauche.setAttribute("class", "bloc_gauche"); 
-        nomArticle.setAttribute("class","texte_nom");
-        description.setAttribute("class","texte_description");
+        nomArticle.setAttribute("class","name_article");
+        description.setAttribute("class","description_article");
         blocDroit.setAttribute("class","bloc_droit");
         prix.setAttribute("class","price_article");
-        lienArticle.setAttribute("class", "selection");
+        lienArticle.setAttribute("class", "selection_article");
         lienArticle.setAttribute("href", "produit.html?" + produit._id);
         // Hiérarchie dans les éléments créés
         listProduct.appendChild(bloc);
@@ -110,10 +123,10 @@ async function detailProduit(){
 
 addPanier = () => {
         //Au clic de l'user pour mettre le produit dans le panier
-        let inputBuy = document.getElementById("ajouterProduitPanier");
+        let inputBuy = document.getElementById("add_product");
         inputBuy.addEventListener("click", async function() {
             const produits = await getProduits();
-        //Récupération du panier dans le localStorage et ajout du produit dans le panier avant revoit dans le localStorage
+        //Récupération du panier dans le localStorage et ajout du produit dans le panier avant renvoi dans le localStorage
         userPanier.push(produits);
         localStorage.setItem("userPanier", JSON.stringify(userPanier));
         console.log("Administration : le produit a été ajouté au panier");
@@ -122,11 +135,11 @@ addPanier = () => {
 };
 
 
-addition = () =>{
+addition = () => {
     //Vérifie si un prduit est dans le panier
     if(JSON.parse(localStorage.getItem("userPanier")).length > 0){
-      //S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
-      document.getElementById("panier_vide").remove();
+      // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
+      document.getElementById("empty_basket").remove();
 
       //Création de la structure principale du tableau  
       let facture = document.createElement("table");
@@ -146,11 +159,8 @@ addition = () =>{
       colonneNom.textContent = "Nom du produit";
       ligneTableau.appendChild(colonnePrixUnitaire);
       colonnePrixUnitaire.textContent = "Prix du produit";
-      /*ligneTableau.appendChild(colonneRemove);
-      colonneRemove.textContent = "Annuler un produit";
-      */
 
-      //Pour chaque produit du panier, on créé une ligne avec le nomle prix
+      //Pour chaque produit du panier, on créé une ligne avec le nom et le prix
       
       //Init de l'incrémentation de l'id des lignes pour chaque produit
       let i = 0;
@@ -186,9 +196,9 @@ addition = () =>{
       //Dernière ligne du tableau : Total
       facture.appendChild(ligneTotal);
       ligneTotal.appendChild(colonneRefTotal);
-      colonneRefTotal.textContent = "Total à payer"
+      colonneRefTotal.textContent = "Total à payer";
       ligneTotal.appendChild(colonnePrixPaye);
-      colonnePrixPaye.setAttribute("id", "sommeTotal")
+      colonnePrixPaye.setAttribute("id", "total_sum");
 
       //Calcule de l'addition total
       let totalPaye = 0;
@@ -197,8 +207,8 @@ addition = () =>{
       });
 
       //Affichage du prix total à payer dans l'addition
-      console.log("Administration : " + totalPaye);
-      document.getElementById("sommeTotal").textContent = totalPaye + ",00€";
+      console.log(`Total à payer : ${totalPaye}€`);
+      document.getElementById("total_sum").textContent = `${totalPaye},00€`;
   };
 }
 
