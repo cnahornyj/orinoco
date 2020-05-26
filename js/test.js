@@ -67,6 +67,7 @@ async function allProductsList(){
     { 
         // Création du HTML
         let bloc = document.createElement("article");
+        let blocPhoto = document.createElement("div");
         let imageArticle = document.createElement("img");
         let blocGauche = document.createElement("div");
         let nomArticle = document.createElement("p");
@@ -76,6 +77,7 @@ async function allProductsList(){
         let lienArticle = document.createElement("a");
         // Attribution des classes
         bloc.setAttribute("class","article");
+        blocPhoto.setAttribute("class","bloc_photo");
         imageArticle.setAttribute("class", "img_article");
         blocGauche.setAttribute("class", "bloc_gauche"); 
         nomArticle.setAttribute("class","name_article");
@@ -86,7 +88,8 @@ async function allProductsList(){
         lienArticle.setAttribute("href", "produit.html?" + produit._id);
         // Hiérarchie dans les éléments créés
         listProduct.appendChild(bloc);
-        bloc.appendChild(imageArticle);
+        bloc.appendChild(blocPhoto);
+        blocPhoto.appendChild(imageArticle);
         bloc.appendChild(blocGauche);
         blocGauche.appendChild(nomArticle);
         blocGauche.appendChild(description);
