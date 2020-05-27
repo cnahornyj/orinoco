@@ -196,6 +196,10 @@ padding: 2.5%;
 color: #41372f;
 }
 
+h3 {
+border-bottom: 1px solid #41372f;
+}
+
 #option_select {
 border: 1px solid #ccc;
 border-radius: 15px;
@@ -331,6 +335,30 @@ transform: scale(1.15);
 
 /* Partie responsive */
 
+@media all and (max-width: 1320px){
+#add_product {
+margin: 8% 0 0 30%;
+}
+}
+
+@media all and (max-width: 1240px){
+#product {
+flex-direction: column;
+}
+#img_product{
+width: 95%;
+height: 200%;
+margin: 2%;    
+}
+#add_product {
+margin: -3% 0 5% 63%;
+}
+#price_product {
+margin-left: 75%;
+margin-bottom: 5%;
+}
+}
+
 @media all and (max-width: 1180px){
 .bloc_droit{
 margin-right: 5%;
@@ -444,6 +472,12 @@ left: 2.5%;
 h2 {
 top: 52%;
 left: 2.5%;
+}
+}
+
+@media all and (max-width: 575px) {
+#price_product {
+margin-left: 70%;
 }
 }
 
