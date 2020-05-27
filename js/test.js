@@ -69,6 +69,7 @@ async function allProductsList(){
         let bloc = document.createElement("article");
         let blocPhoto = document.createElement("div");
         let imageArticle = document.createElement("img");
+        let blocDescription = document.createElement("div");
         let blocGauche = document.createElement("div");
         let nomArticle = document.createElement("p");
         let description = document.createElement("p");
@@ -79,6 +80,7 @@ async function allProductsList(){
         bloc.setAttribute("class","article");
         blocPhoto.setAttribute("class","bloc_photo");
         imageArticle.setAttribute("class", "img_article");
+        blocDescription.setAttribute("class","bloc_description");
         blocGauche.setAttribute("class", "bloc_gauche"); 
         nomArticle.setAttribute("class","name_article");
         description.setAttribute("class","description_article");
@@ -90,10 +92,11 @@ async function allProductsList(){
         listProduct.appendChild(bloc);
         bloc.appendChild(blocPhoto);
         blocPhoto.appendChild(imageArticle);
-        bloc.appendChild(blocGauche);
+        bloc.appendChild(blocDescription);
+        blocDescription.appendChild(blocGauche);
         blocGauche.appendChild(nomArticle);
         blocGauche.appendChild(description);
-        bloc.appendChild(blocDroit);
+        blocDescription.appendChild(blocDroit);
         blocDroit.appendChild(prix);
         blocDroit.appendChild(lienArticle);
         // Remplissage du contenu des balises
