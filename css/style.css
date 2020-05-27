@@ -344,11 +344,12 @@ margin: 8% 0 0 30%;
 @media all and (max-width: 1240px){
 #product {
 flex-direction: column;
+width: 50%;
 }
 #img_product{
 width: 95%;
 height: 200%;
-margin: 2%;    
+margin: 2% 2%;
 }
 #add_product {
 margin: -3% 0 5% 63%;
@@ -455,6 +456,9 @@ left: 5%;
 h2 {
 top: 55%;
 left: 5%;
+}
+#price_product {
+margin-left: 72%;
 }
 }
 
