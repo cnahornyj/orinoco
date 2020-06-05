@@ -28,33 +28,26 @@
 			<form method="post" name="form-panier">
 				<fieldset>
 					<legend>Civilité</legend>
-					<div class="form_group">
-						<div>
-							<label for="formNom">Nom</label></br>
-							<input type="text" id="formNom" required name="formNom">
-						</div>
-						<div>
-							<label for="formPrenom" class="right-inline">Prénom</label></br>
-							<input type="text" id="formPrenom" required name="formPrenom">
-						</div>
-					</div>
+						<label for="formNom">Nom</label></br>
+						<input type="text" id="formNom" required name="formNom" onblur="formNameValidate()">
+						<span id="aideNom"></span></br>
+						<label for="formPrenom" class="right-inline">Prénom</label></br>
+						<input type="text" id="formPrenom" required name="formPrenom" onblur="formSurnameValidate()">
+						<span id="aidePrenom"></span>
 				</fieldset> 
 				<fieldset>
 					<legend>Coordonnées</legend>
-					<div class="form_group">
 						<label for="formMail">E-mail</label></br>
-						<input type="email" id="formMail" required name="formMail">
-					</div>
-					<div class="form_group">
+						<input type="email" id="formMail" required name="formMail" onblur="formEmailValidate()">
+						<span id="aideMail"></span></br>
 						<label for="formAdresse">Adresse</label></br>
-						<input type="text" id="formAdresse" required name="formAdresse">
-					</div>
-					<div class="form_group">
+						<input type="text" id="formAdresse" required name="formAdresse" onblur="formAdresseValidate()">
+						<span id="aideAdresse"></span></br>
 						<label for="formVille">Ville</label></br>
-						<input type="text" id="formVille" required name="formVille">
-					</div>
+						<input type="text" id="formVille" required name="formVille" onblur="formVilleValidate()">
+						<span id="aideVille"></span>
 				</fieldset> 
-				<input type="button" value="Je valide mon panier et mes informations" id="envoiPost">
+				<input type="submit" value="Je valide mon panier et mes informations" id="envoiPost">
 			</form>
 		</div>
 	</main>
@@ -71,5 +64,8 @@
     <script src="js/test.js"></script>
     <script>
 		addition();
+		checkForm();
+		checkPanier();
+		validForm();
 	</script>
 </body>

@@ -3,48 +3,21 @@ const APIURL = "http://localhost:3000/api/" + produitSell + "/";
 
 let idProduit = "";
 
-if (localStorage.getItem("userPanier")) {
-	console.log("Administration : le panier de l'utilisateur existe déjà dans le localStorage");
-} else {
-	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
-  	//Le panier est un tableau de produits
-  	let panierInit = [];
-  	localStorage.setItem("userPanier", JSON.stringify(panierInit));
-};
-
-//Tableau et objet demandés pour la commande
-let contact;
-let products = [];
-
-//L'user a maintenant un panier
-let userPanier = JSON.parse(localStorage.getItem("userPanier"));
-
 getProduits = () => {
 	return new Promise((resolve) => {
 		let request = new XMLHttpRequest();
 		request.onreadystatechange = function() {
-			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
-			{
-				resolve(JSON.parse(this.responseText));
+			if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+                resolve(JSON.parse(this.responseText));
 				console.log("Administration : connection ok");
-                console.log(this.responseText);
-                let sectionError = document.getElementById("error");
-                sectionError.remove();
+				//L'appel est réussi => suppression des message d'erreur
+				error = document.getElementById("error");
+				//On supprime le message d'erreur s'il existe
+				if(error){
+					error.remove();
+				}
 			} else {
-				let sectionError = document.getElementById("error");
-
-                let icon = document.createElement("i");
-                let message = document.createElement("p");
-
-                sectionError.appendChild(icon);
-                sectionError.appendChild(message);
-
-                icon.setAttribute("id","error_logo");
-                icon.setAttribute("class", "fas fa-exclamation-triangle fa-5x");
-                message.setAttribute("id","error_message");
-                
-                message.textContent = "Une erreur est survenue quant à la récupération des données ou la page demandée n'existe pas ! Veuillez réessayer";
-                console.log("Problème avec l'API");
+                console.log("Problème de chargement des données de l'API");
 			}
 		}
 		request.open("GET", APIURL + idProduit);
@@ -116,33 +89,58 @@ async function detailProduit(){
 
         let sectionProduit = document.getElementById("main");
 
+        // A COMMENTER
         document.getElementById("img_product").setAttribute("src", produitSelected.imageUrl);
         document.getElementById("name_product").innerHTML = produitSelected.name;
         document.getElementById("description_product").innerHTML = produitSelected.description;
         document.getElementById("price_product").innerHTML = produitSelected.price / 100 + ",00€";
     
+        // A COMMENTER
         produitSelected.varnish.forEach((produit) => {
             let optionProduit = document.createElement("option");
             document.getElementById("option_select").appendChild(optionProduit).innerHTML = produit;
     });
 };
 
+if (localStorage.getItem("userPanier")) {
+	console.log("Administration : le panier de l'utilisateur existe déjà dans le localStorage");
+} else {
+	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
+  	// Le panier est un tableau de produits
+  	let panierInit = [];
+  	localStorage.setItem("userPanier", JSON.stringify(panierInit));
+};
+
+// Tableau et objet demandés pour la commande
+let contact;
+let products = [];
+
+// L'utilisateur a maintenant un panier
+let userPanier = JSON.parse(localStorage.getItem("userPanier"));
+
+
 addPanier = () => {
-        //Au clic de l'user pour mettre le produit dans le panier
+        // Au clic de l'user pour mettre le produit dans le panier
         let inputBuy = document.getElementById("add_product");
         inputBuy.addEventListener("click", async function() {
             const produits = await getProduits();
-        //Récupération du panier dans le localStorage et ajout du produit dans le panier avant renvoi dans le localStorage
+        // Récupération du panier dans le localStorage et ajout du produit dans le panier avant renvoi dans le localStorage
         userPanier.push(produits);
         localStorage.setItem("userPanier", JSON.stringify(userPanier));
         console.log("Administration : le produit a été ajouté au panier");
-        alert("Vous avez ajouté ce produit dans votre panier")
+        setTimeout(function() {
+            document.getElementById('add_done').textContent = "Vous avez ajouté ce produit à votre panier !";
+        },500);
+        function add_done_remove(){
+            document.getElementById("add_done").textContent="";
+        }
+        window.setTimeout(add_done_remove, 4000);
+        console.log(produits);
     });
 };
 
-
 addition = () => {
-    //Vérifie si un prduit est dans le panier
+    // Vérifie si un produit est dans le panier
     if(JSON.parse(localStorage.getItem("userPanier")).length > 0){
       // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
       document.getElementById("empty_basket").remove();
@@ -166,9 +164,9 @@ addition = () => {
       ligneTableau.appendChild(colonnePrixUnitaire);
       colonnePrixUnitaire.textContent = "Prix du produit";
 
-      //Pour chaque produit du panier, on créé une ligne avec le nom et le prix
+      // Pour chaque produit du panier, on créé une ligne avec le nom et le prix
       
-      //Init de l'incrémentation de l'id des lignes pour chaque produit
+      // init de l'incrémentation de l'id des lignes pour chaque produit
       let i = 0;
       
       JSON.parse(localStorage.getItem("userPanier")).forEach((produit)=>{
@@ -178,57 +176,240 @@ addition = () => {
         let prixUnitProduit = document.createElement("td");
         let removeProduit = document.createElement("i");
 
-        //Attribution des class pour le css
+        // Attribution des class pour le css
         ligneProduit.setAttribute("id", "produit"+i);
         removeProduit.setAttribute("id", "remove"+i);
         removeProduit.setAttribute('class', "fas fa-trash-alt annulerProduit");
-        //Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
-        //bind permet de garder l'incrementation du i qui représente l'index tu panier au moment de la création de l'event
-        //annulerProduit L233
+        // Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
+        // bind permet de garder l'incrementation du i qui représente l'index tu panier au moment de la création de l'event
+        // annulerProduit L233
         removeProduit.addEventListener('click', annulerProduit.bind(i));
         i++;
 
-        //Insertion dans le HTML
+        // Insertion dans le HTML
         facture.appendChild(ligneProduit);
         ligneProduit.appendChild(nomProduit);
         ligneProduit.appendChild(prixUnitProduit);
         ligneProduit.appendChild(removeProduit);
 
-        //Contenu des lignes
+        // Contenu des lignes
         nomProduit.innerHTML = produit.name;
         prixUnitProduit.textContent = produit.price / 100 + " €";
     });
 
-      //Dernière ligne du tableau : Total
+      // Dernière ligne du tableau : Total
       facture.appendChild(ligneTotal);
       ligneTotal.appendChild(colonneRefTotal);
       colonneRefTotal.textContent = "Total à payer";
       ligneTotal.appendChild(colonnePrixPaye);
       colonnePrixPaye.setAttribute("id", "total_sum");
 
-      //Calcule de l'addition total
+      // Calcul du montant total
       let totalPaye = 0;
       JSON.parse(localStorage.getItem("userPanier")).forEach((produit)=>{
       	totalPaye += produit.price / 100;
       });
 
-      //Affichage du prix total à payer dans l'addition
+      // Affichage du prix total à payer
       console.log(`Total à payer : ${totalPaye}€`);
       document.getElementById("total_sum").textContent = `${totalPaye},00€`;
   };
 }
 
 annulerProduit = (i) => {
-    console.log("Administration : Enlever le produit à l'index " + i);
-    //recupérer le array
+    console.log(`Administration : Enlever le produit à l'index ${i}`);
+    // Recupérer le array
     userPanier.splice(i, 1); 
-    console.log("Administration : " + userPanier);
-    //vide le localstorage
+    console.log(`Administration : ${userPanier}`);
+    // Vider le localstorage
     localStorage.clear();
-    console.log("Administration : localStorage vidé");
-    // mettre à jour le localStorage avec le nouveau panier
+    console.log(`Administration : localStorage vidé`);
+    // Mettre à jour le localStorage avec le nouveau panier
     localStorage.setItem('userPanier', JSON.stringify(userPanier));
-    console.log("Administration : localStorage mis à jour");
-    //relancer la création de l'addition
+    console.log(`Administration : localStorage mis à jour`);
+    // Réactualiser la page avec le nouveau montant du panier/ou panier vide
     window.location.reload();
 };
+
+function formNameValidate() {
+regexString = /^[A-Z]{1}[a-z]/;
+let aideNom = document.getElementById("aideNom");
+let saisieNom = document.getElementById("formNom");
+    if (regexString.test(formNom.value) == true){
+        aideNom.textContent = "";
+        saisieNom.style.color = "black";
+        saisieNom.style.backgroundColor = "white";
+        saisieNom.style.border = "0";
+        return true;
+    } else {
+        aideNom.textContent = "Une majuscule et des minuscules";
+        aideNom.style.color = "#f2615c";
+        saisieNom.style.backgroundColor = "#f7bcb9";
+        saisieNom.style.border = "1px solid #f7a5a0";
+        return false;
+    }
+}
+
+function formSurnameValidate() {
+regexString = /^[A-Z]{1}[a-z]/;
+let aidePrenom = document.getElementById("aidePrenom");
+let saisiePrenom = document.getElementById("formPrenom");
+    if (regexString.test(formPrenom.value) == true){
+        aidePrenom.textContent = "";
+        saisiePrenom.style.color = "black";
+        saisiePrenom.style.backgroundColor = "white";
+        saisiePrenom.style.border = "0";
+        return true;
+
+    } else {
+        aidePrenom.textContent = "Une majuscule et des minuscules";
+        aidePrenom.style.color = "#f2615c";
+        saisiePrenom.style.backgroundColor = "#f7bcb9";
+        saisiePrenom.style.border = "1px solid #f7a5a0";
+        return false;
+    }
+}
+
+function formEmailValidate(){
+regexEmail = /.+@.+\..+/;
+let aideMail = document.getElementById("aideMail");
+let saisieMail = document.getElementById("formMail");
+    if (regexEmail.test(formMail.value) == true){
+        aideMail.textContent = "";
+        saisieMail.style.color = "black";
+        saisieMail.style.backgroundColor = "white";
+        saisieMail.style.border = "0";
+        return true;
+    } else {
+        aideMail.textContent = "L'email doit être au format xxxxx@yyy.zzz";
+        aideMail.style.color = "#f2615c";
+        saisieMail.style.backgroundColor = "#f7bcb9";
+        saisieMail.style.border = "1px solid #f7a5a0";
+        return false;
+    }    
+}
+
+function formAdresseValidate(){
+regexAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
+let aideAdresse = document.getElementById("aideAdresse");
+let saisieAdresse = document.getElementById("formAdresse");
+    if (regexAdresse.test(formAdresse.value) == true){
+        aideAdresse.textContent = "";
+        saisieAdresse.style.color = "black";
+        saisieAdresse.style.backgroundColor = "white";
+        saisieAdresse.style.border = "0";
+        return true;
+    } else {
+        aideAdresse.textContent = "Un caractère est interdit ou il manque le type de voie";
+        aideAdresse.style.color = "#f2615c";
+        saisieAdresse.style.backgroundColor = "#f7bcb9";
+        saisieAdresse.style.border = "1px solid #f7a5a0";
+        return false;
+    }    
+}
+
+function formVilleValidate(){
+regexString = /^[A-Z]{1}[a-z]/;
+let aideVille = document.getElementById("aideVille");
+let saisieVille = document.getElementById("formVille");
+    if (regexString.test(formVille.value) == true){
+        aideVille.textContent = "";
+        saisieVille.style.color = "black";
+        saisieVille.style.backgroundColor = "white";
+        saisieVille.style.border = "0";
+        return true;
+    } else {
+        aideVille.textContent = "Une majuscule et des minuscules";
+        aideVille.style.color = "#f2615c";
+        saisieVille.style.backgroundColor = "#f7bcb9";
+        saisieVille.style.border = "1px solid #f7a5a0";
+        return false;
+    }    
+}
+
+checkForm = () => {
+    if(formNameValidate() == true && formSurnameValidate() == true && formEmailValidate() == true && formAdresseValidate() == true && formVilleValidate() == true){
+        contact = {
+            prenom: saisiePrenom,
+            nom: saisieNom,
+            adresse_electronique: saisieMail,
+            adresse: saisieAdresse,
+            ville: saisieVille
+        }
+        return contact;
+        // return true;
+    } else {
+        return false;
+    }
+}
+
+checkPanier = () => {
+    // Vérifier qu'il y ait au moins un produit dans le panier
+    let etatPanier = JSON.parse(localStorage.getItem("userPanier"));
+
+    if(etatPanier.length < 1){
+        console.log("Erreur : le panier est vide !");
+        return false;
+    } else {
+        // Si le panier n'est pas vide on remplit le tableau products avec le/les id de/des articles
+        JSON.parse(localStorage.getItem("userPanier")).forEach((produit) => {
+            products.push(produit._id);
+        });
+        console.log(`Ce tableau sera envoyé à l'API : ${products}`);
+        return true;
+    }
+};
+
+envoiDonnees = (objetRequest) => {
+    return new Promise((resolve)=>{
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
+            {
+        // Sauvegarde du retour de l'API dans la sessionStorage pour affichage dans confirmation.html
+        sessionStorage.setItem("order", this.responseText);
+
+        // Chargement de la page de confirmation
+        document.forms["form-panier"].action = './confirmation.html';
+        document.forms["form-panier"].submit();
+
+        resolve(JSON.parse(this.responseText));
+    }
+};
+request.open("POST", APIURL + "order");
+request.setRequestHeader("Content-Type", "application/json");
+request.send(objetRequest);
+});
+};
+
+validForm = () => {
+    //Ecoute de l'event click du formulaire
+    let btnForm = document.getElementById("envoiPost");
+    btnForm.addEventListener("click", function(){
+      //Lancement des verifications du panier et du form => si Ok envoi
+      if(checkPanier() == true && checkForm() == true){
+      	console.log("Administration : L'envoi peut etre fait");
+      //Création de l'objet à envoyer
+      let objet = {
+          products,
+          contact
+      };
+      console.log("Administration : " + objet);
+     //Conversion en JSON
+     let objetRequest = JSON.stringify(objet);
+     console.log("Administration : " + objetRequest);
+     //Envoi de l'objet via la function
+     envoiDonnees(objetRequest);
+
+     //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+     // contact = {};
+     products = [];
+     contact = {};
+     localStorage.clear();
+ } else {
+ 	console.log("Administration : ERROR");
+ };
+});
+};
+
+
