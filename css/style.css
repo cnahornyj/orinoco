@@ -236,11 +236,12 @@ transform: scale(1.15);
 text-align: center;
 font-size: 140%;
 margin: 2% 0 -3% 0;
+color: #493f36;
 }
 
 /* Page du panier A REVOIRRR */
 
-#basket {
+.basket {
 display: flex;
 justify-content: center;
 margin: 3% 0 9% 0;
@@ -398,7 +399,7 @@ top: 90px;
 }
 
 @media all and (max-width: 1080px){
-#basket {
+.basket {
 flex-direction: column;
 }
 #basket-resume{

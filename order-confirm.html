@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/all.min.css">
+	<title>Confirmation de commande</title>
+</head>
+<body>
+	<header>
+        <nav>
+            <a href="index.html"><img src="images/orinoco.svg"/></a>
+            <ul>
+                <li><a href="panier.html"><i class="fas fa-shopping-bag fa-2x" style="color:#fff;"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+	<section>
+		<div id="order_result">
+			<i class="fas fa-check"></i>
+			<p>Merci pour votre achat <span id="lastName"></span> !</p>
+			<p>Voici votre numéro de commande : <span id="orderId"></span></p>
+		</div>
+	</section>
+	<footer>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-lock fa-2x" style="color:#fff;"></i></a></li>
+            </ul>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-truck fa-2x" style="color:#fff;"></i></a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script src="js/test.js"></script>
+    <script>resultOrder()</script>
+</body>
+</html>

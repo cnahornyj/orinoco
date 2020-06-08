@@ -1,23 +1,42 @@
 const produitSell = "furniture";
 const APIURL = "http://localhost:3000/api/" + produitSell + "/";
 
+
 let idProduit = "";
 
+if (localStorage.getItem("userBasket")) {
+	console.log("Administration : le panier de l'utilisateur existe déjà dans le localStorage");
+} else {
+	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
+  	// Le panier est un tableau de produits
+  	let panierInit = [];
+  	localStorage.setItem("userBasket", JSON.stringify(panierInit));
+};
+
+// Tableau et objet demandés pour la commande
+let contact;
+let products = [];
+
+// L'utilisateur a maintenant un panier
+let userBasket = JSON.parse(localStorage.getItem("userBasket"));
+
 getProduits = () => {
-	return new Promise((resolve) => {
+	return new Promise((resolve) =>{
 		let request = new XMLHttpRequest();
 		request.onreadystatechange = function() {
-			if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-                resolve(JSON.parse(this.responseText));
+			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
+			{
+				resolve(JSON.parse(this.responseText));
 				console.log("Administration : connection ok");
+
 				//L'appel est réussi => suppression des message d'erreur
 				error = document.getElementById("error");
 				//On supprime le message d'erreur s'il existe
 				if(error){
 					error.remove();
 				}
-			} else {
-                console.log("Problème de chargement des données de l'API");
+			}else{
+				console.log("Administration : ERROR connection API");
 			}
 		}
 		request.open("GET", APIURL + idProduit);
@@ -60,7 +79,7 @@ async function allProductsList(){
         blocDroit.setAttribute("class","bloc_droit");
         prix.setAttribute("class","price_article");
         lienArticle.setAttribute("class", "selection_article");
-        lienArticle.setAttribute("href", "produit.html?" + produit._id);
+        lienArticle.setAttribute("href", "produit.html?id=" + produit._id);
         // Hiérarchie dans les éléments créés
         listProduct.appendChild(bloc);
         bloc.appendChild(blocPhoto);
@@ -83,11 +102,9 @@ async function allProductsList(){
 
 async function detailProduit(){
         //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
-        idProduit = location.search.substring(1);
+        idProduit = location.search.substring(4);
         const produitSelected = await getProduits();
         console.log("Administration : Vous regardez la page du produit id_"+ produitSelected._id);
-
-        let sectionProduit = document.getElementById("main");
 
         // A COMMENTER
         document.getElementById("img_product").setAttribute("src", produitSelected.imageUrl);
@@ -102,31 +119,14 @@ async function detailProduit(){
     });
 };
 
-if (localStorage.getItem("userPanier")) {
-	console.log("Administration : le panier de l'utilisateur existe déjà dans le localStorage");
-} else {
-	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
-  	// Le panier est un tableau de produits
-  	let panierInit = [];
-  	localStorage.setItem("userPanier", JSON.stringify(panierInit));
-};
-
-// Tableau et objet demandés pour la commande
-let contact;
-let products = [];
-
-// L'utilisateur a maintenant un panier
-let userPanier = JSON.parse(localStorage.getItem("userPanier"));
-
-
 addPanier = () => {
         // Au clic de l'user pour mettre le produit dans le panier
         let inputBuy = document.getElementById("add_product");
         inputBuy.addEventListener("click", async function() {
             const produits = await getProduits();
         // Récupération du panier dans le localStorage et ajout du produit dans le panier avant renvoi dans le localStorage
-        userPanier.push(produits);
-        localStorage.setItem("userPanier", JSON.stringify(userPanier));
+        userBasket.push(produits);
+        localStorage.setItem("userBasket", JSON.stringify(userBasket));
         console.log("Administration : le produit a été ajouté au panier");
         setTimeout(function() {
             document.getElementById('add_done').textContent = "Vous avez ajouté ce produit à votre panier !";
@@ -135,13 +135,13 @@ addPanier = () => {
             document.getElementById("add_done").textContent="";
         }
         window.setTimeout(add_done_remove, 4000);
-        console.log(produits);
+        // console.log(produits);
     });
 };
 
 addition = () => {
     // Vérifie si un produit est dans le panier
-    if(JSON.parse(localStorage.getItem("userPanier")).length > 0){
+    if(JSON.parse(localStorage.getItem("userBasket")).length > 0){
       // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
       document.getElementById("empty_basket").remove();
 
@@ -169,7 +169,7 @@ addition = () => {
       // init de l'incrémentation de l'id des lignes pour chaque produit
       let i = 0;
       
-      JSON.parse(localStorage.getItem("userPanier")).forEach((produit)=>{
+      JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
         //Création de la ligne
         let ligneProduit = document.createElement("tr");
         let nomProduit = document.createElement("td");
@@ -206,7 +206,7 @@ addition = () => {
 
       // Calcul du montant total
       let totalPaye = 0;
-      JSON.parse(localStorage.getItem("userPanier")).forEach((produit)=>{
+      JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
       	totalPaye += produit.price / 100;
       });
 
@@ -231,150 +231,109 @@ annulerProduit = (i) => {
     window.location.reload();
 };
 
-function formNameValidate() {
-regexString = /^[A-Z]{1}[a-z]/;
-let aideNom = document.getElementById("aideNom");
-let saisieNom = document.getElementById("formNom");
-    if (regexString.test(formNom.value) == true){
-        aideNom.textContent = "";
-        saisieNom.style.color = "black";
-        saisieNom.style.backgroundColor = "white";
-        saisieNom.style.border = "0";
-        return true;
-    } else {
-        aideNom.textContent = "Une majuscule et des minuscules";
-        aideNom.style.color = "#f2615c";
-        saisieNom.style.backgroundColor = "#f7bcb9";
-        saisieNom.style.border = "1px solid #f7a5a0";
-        return false;
-    }
-}
+checkInput = () => {
+    //Controle Regex
+    let checkString = /[a-zA-Z]/;
+    let checkNumber = /[0-9]/;
+    //Source pour vérification email => emailregex.com
+    let checkMail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/y;
+    let checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
 
-function formSurnameValidate() {
-regexString = /^[A-Z]{1}[a-z]/;
-let aidePrenom = document.getElementById("aidePrenom");
-let saisiePrenom = document.getElementById("formPrenom");
-    if (regexString.test(formPrenom.value) == true){
-        aidePrenom.textContent = "";
-        saisiePrenom.style.color = "black";
-        saisiePrenom.style.backgroundColor = "white";
-        saisiePrenom.style.border = "0";
-        return true;
+    //message fin de controle
+    let checkMessage = "";
 
-    } else {
-        aidePrenom.textContent = "Une majuscule et des minuscules";
-        aidePrenom.style.color = "#f2615c";
-        saisiePrenom.style.backgroundColor = "#f7bcb9";
-        saisiePrenom.style.border = "1px solid #f7a5a0";
-        return false;
-    }
-}
+    //Récupération des inputs
+    let formNom = document.getElementById("formNom").value;
+    let formPrenom = document.getElementById("formPrenom").value;
+    let formMail = document.getElementById("formMail").value;
+    let formAdresse = document.getElementById("formAdresse").value;
+    let formVille = document.getElementById("formVille").value;
 
-function formEmailValidate(){
-regexEmail = /.+@.+\..+/;
-let aideMail = document.getElementById("aideMail");
-let saisieMail = document.getElementById("formMail");
-    if (regexEmail.test(formMail.value) == true){
-        aideMail.textContent = "";
-        saisieMail.style.color = "black";
-        saisieMail.style.backgroundColor = "white";
-        saisieMail.style.border = "0";
-        return true;
-    } else {
-        aideMail.textContent = "L'email doit être au format xxxxx@yyy.zzz";
-        aideMail.style.color = "#f2615c";
-        saisieMail.style.backgroundColor = "#f7bcb9";
-        saisieMail.style.border = "1px solid #f7a5a0";
-        return false;
-    }    
-}
 
-function formAdresseValidate(){
-regexAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
-let aideAdresse = document.getElementById("aideAdresse");
-let saisieAdresse = document.getElementById("formAdresse");
-    if (regexAdresse.test(formAdresse.value) == true){
-        aideAdresse.textContent = "";
-        saisieAdresse.style.color = "black";
-        saisieAdresse.style.backgroundColor = "white";
-        saisieAdresse.style.border = "0";
-        return true;
+    // tests des différents input du formulaire
+    // Test du nom => aucun chiffre ou charactère spécial permis
+    if(checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true || formNom == ""){
+      checkMessage = "Vérifier/renseigner votre nom";
+    }else{
+      console.log("Administration : Nom ok");
+    };
+    // Test du nom => aucun chiffre ou charactère spécial permis
+    if(checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true || formPrenom == ""){
+      checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre prénom";
+    }else{
+      console.log("Administration : Prénom ok");
+    };
+    // Test du mail selon le regex de la source L256
+    if(checkMail.test(formMail) == false){
+      checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre email";
+    }else{
+      console.log("Administration : Adresse mail ok");
+    };
+    // Test de l'adresse => l'adresse ne contient pas obligatoirement un numéro de rue mais n'a pas de characteres spéciaux
+    if(checkSpecialCharacter.test(formAdresse) == true || formAdresse == ""){
+      checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre adresse";
+    }else{
+      console.log("Administration : Adresse ok");
+    };
+    // Test de la ville => aucune ville en France ne comporte de chiffre ou charactères spéciaux
+    if(checkSpecialCharacter.test(formVille) == true && checkNumber.test(formVille) == true || formVille == ""){
+      checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre ville"
+    }else{
+      console.log("Administration : Ville ok")
+    };
+    // Si un des champs n'est pas bon => message d'alert avec la raison
+    if(checkMessage != ""){
+      alert("Il est nécessaire de :" + "\n" + checkMessage);
     } else {
-        aideAdresse.textContent = "Un caractère est interdit ou il manque le type de voie";
-        aideAdresse.style.color = "#f2615c";
-        saisieAdresse.style.backgroundColor = "#f7bcb9";
-        saisieAdresse.style.border = "1px solid #f7a5a0";
-        return false;
-    }    
-}
-
-function formVilleValidate(){
-regexString = /^[A-Z]{1}[a-z]/;
-let aideVille = document.getElementById("aideVille");
-let saisieVille = document.getElementById("formVille");
-    if (regexString.test(formVille.value) == true){
-        aideVille.textContent = "";
-        saisieVille.style.color = "black";
-        saisieVille.style.backgroundColor = "white";
-        saisieVille.style.border = "0";
-        return true;
-    } else {
-        aideVille.textContent = "Une majuscule et des minuscules";
-        aideVille.style.color = "#f2615c";
-        saisieVille.style.backgroundColor = "#f7bcb9";
-        saisieVille.style.border = "1px solid #f7a5a0";
-        return false;
-    }    
-}
-
-checkForm = () => {
-    if(formNameValidate() == true && formSurnameValidate() == true && formEmailValidate() == true && formAdresseValidate() == true && formVilleValidate() == true){
-        contact = {
-            prenom: saisiePrenom,
-            nom: saisieNom,
-            adresse_electronique: saisieMail,
-            adresse: saisieAdresse,
-            ville: saisieVille
-        }
-        return contact;
-        // return true;
-    } else {
-        return false;
-    }
-}
+      contact = {
+        firstName: formNom,
+        lastName: formPrenom,
+        address: formAdresse,
+        city: formVille,
+        email: formMail
+      };
+    return contact;
+    };
+};
 
 checkPanier = () => {
-    // Vérifier qu'il y ait au moins un produit dans le panier
-    let etatPanier = JSON.parse(localStorage.getItem("userPanier"));
-
-    if(etatPanier.length < 1){
-        console.log("Erreur : le panier est vide !");
-        return false;
-    } else {
-        // Si le panier n'est pas vide on remplit le tableau products avec le/les id de/des articles
-        JSON.parse(localStorage.getItem("userPanier")).forEach((produit) => {
-            products.push(produit._id);
-        });
-        console.log(`Ce tableau sera envoyé à l'API : ${products}`);
-        return true;
-    }
+  //Vérifier qu'il y ai au moins un produit dans le panier
+  let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
+  //Si le panier est vide ou null (suppression localStorage par)=>alerte
+  if(etatPanier == null){
+	//Si l'utilisateur à supprimer son localStorage etatPanier sur la page basket.html et qu'il continue le process de commande
+	alert("Il y a eu un problème avec votre panier, une action non autorisée a été faite. Veuillez recharger la page pour la corriger");
+	return false
+}else if(etatPanier.length < 1 || etatPanier == null){
+	console.log("Administration: ERROR => le localStorage ne contient pas de panier")
+	alert("Votre panier est vide");
+	return false;
+}else{
+	console.log("Administration : Le panier n'est pas vide")
+    //Si le panier n'est pas vide on rempli le products envoyé à l'API
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) =>{
+    	products.push(produit._id);
+    });
+    console.log("Administration : Ce tableau sera envoyé à l'API : " + products)
+    return true;
+  }
 };
 
 envoiDonnees = (objetRequest) => {
-    return new Promise((resolve)=>{
-        let request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
-            {
-        // Sauvegarde du retour de l'API dans la sessionStorage pour affichage dans confirmation.html
-        sessionStorage.setItem("order", this.responseText);
+  return new Promise((resolve) => { 
+  let request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+  if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
+  {
+    //Sauvegarde du retour de l'API dans la sessionStorage pour affichage dans order-confirm.html
+    sessionStorage.setItem("order", this.responseText);
 
-        // Chargement de la page de confirmation
-        document.forms["form-panier"].action = './confirmation.html';
-        document.forms["form-panier"].submit();
+    //Chargement de la page de confirmation
+    document.forms["form-panier"].action = './order-confirm.html';
+    document.forms["form-panier"].submit();
 
-        resolve(JSON.parse(this.responseText));
-    }
+    resolve(JSON.parse(this.responseText));
+  }
 };
 request.open("POST", APIURL + "order");
 request.setRequestHeader("Content-Type", "application/json");
@@ -383,33 +342,47 @@ request.send(objetRequest);
 };
 
 validForm = () => {
-    //Ecoute de l'event click du formulaire
-    let btnForm = document.getElementById("envoiPost");
-    btnForm.addEventListener("click", function(){
-      //Lancement des verifications du panier et du form => si Ok envoi
-      if(checkPanier() == true && checkForm() == true){
-      	console.log("Administration : L'envoi peut etre fait");
-      //Création de l'objet à envoyer
-      let objet = {
-          products,
-          contact
-      };
-      console.log("Administration : " + objet);
-     //Conversion en JSON
-     let objetRequest = JSON.stringify(objet);
-     console.log("Administration : " + objetRequest);
-     //Envoi de l'objet via la function
-     envoiDonnees(objetRequest);
+  // Ecoute de l'event click du formulaire
+  let btnForm = document.getElementById("envoiPost");
+  btnForm.addEventListener("click", function(){
+    //Lancement des verifications du panier et du form => si Ok envoi
+    if(checkPanier() == true && checkInput() != null){
+      console.log("Administration : L'envoi peut etre fait");
+    //Création de l'objet à envoyer
+    let objet = {
+      contact,
+      products
+    };
+    console.log("Administration : " + objet);
+   // Conversion en JSON
+   let objetRequest = JSON.stringify(objet);
+   console.log("Administration : " + objetRequest);
+   // Envoi de l'objet via la function
+   envoiDonnees(objetRequest);
 
-     //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-     // contact = {};
-     products = [];
-     contact = {};
-     localStorage.clear();
- } else {
- 	console.log("Administration : ERROR");
- };
+   // Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+   contact = {};
+   products = [];
+   localStorage.clear();
+  }else{
+  console.log("Administration : ERROR");
+  };
 });
 };
 
-
+resultOrder = () => {
+  if(sessionStorage.getItem("order") != null){
+    // Parse du session storage
+    let order = JSON.parse(sessionStorage.getItem("order"));
+    // Implatation de prénom et de id de commande dans le html sur la page de confirmation
+    document.getElementById("lastName").innerHTML = order.contact.lastName;
+    document.getElementById("orderId").innerHTML = order.orderId; 
+    
+    // Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
+    sessionStorage.removeItem("order");
+  } else {
+    // Avertissement et redirection vers l'accueil
+    alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+    window.open("./index.html");
+  }
+}

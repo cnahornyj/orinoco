@@ -20,7 +20,7 @@
         <h1>Meubles en chêne</h1>
         <h2>Une sélection de produits</h2>
     </div>
-    <main id="basket">
+    <main class="basket">
 		<div id="basket-resume">
 			<p id="empty_basket">Votre panier est vide</p>
 		</div>
@@ -29,23 +29,18 @@
 				<fieldset>
 					<legend>Civilité</legend>
 						<label for="formNom">Nom</label></br>
-						<input type="text" id="formNom" required name="formNom" onblur="formNameValidate()">
-						<span id="aideNom"></span></br>
+						<input type="text" id="formNom" required name="formNom">
 						<label for="formPrenom" class="right-inline">Prénom</label></br>
-						<input type="text" id="formPrenom" required name="formPrenom" onblur="formSurnameValidate()">
-						<span id="aidePrenom"></span>
+						<input type="text" id="formPrenom" required name="formPrenom">
 				</fieldset> 
 				<fieldset>
 					<legend>Coordonnées</legend>
 						<label for="formMail">E-mail</label></br>
-						<input type="email" id="formMail" required name="formMail" onblur="formEmailValidate()">
-						<span id="aideMail"></span></br>
+						<input type="email" id="formMail" required name="formMail">
 						<label for="formAdresse">Adresse</label></br>
-						<input type="text" id="formAdresse" required name="formAdresse" onblur="formAdresseValidate()">
-						<span id="aideAdresse"></span></br>
+						<input type="text" id="formAdresse" required name="formAdresse">
 						<label for="formVille">Ville</label></br>
-						<input type="text" id="formVille" required name="formVille" onblur="formVilleValidate()">
-						<span id="aideVille"></span>
+						<input type="text" id="formVille" required name="formVille">
 				</fieldset> 
 				<input type="submit" value="Je valide mon panier et mes informations" id="envoiPost">
 			</form>
@@ -64,8 +59,6 @@
     <script src="js/test.js"></script>
     <script>
 		addition();
-		checkForm();
-		checkPanier();
 		validForm();
 	</script>
 </body>
