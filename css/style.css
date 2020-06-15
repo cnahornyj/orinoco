@@ -166,6 +166,7 @@ border: 1px solid #a6b9ac;
 border-radius: 18px;
 padding: 12px;
 background-color: #afbcb3;
+text-decoration: none;
 }
 
 .selection_article:hover {
