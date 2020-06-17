@@ -311,7 +311,13 @@ envoiDonnees = (objetRequest) => {
     request.onreadystatechange = function() {
       if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
       {
-        sessionStorage.setItem("order", this.responseText);
+      sessionStorage.setItem("order", this.responseText);
+
+      //Chargement de la page de confirmation
+      document.forms["form-panier"].action = './confirmation.html';
+      document.forms["form-panier"].submit();
+
+      resolve(JSON.parse(this.responseText));
     } else {
       alert("Problème avec l'envoi des données");
     }
@@ -324,23 +330,46 @@ request.send(objetRequest);
 
   //Au click sur le btn de validation du formulaire
 validForm = () => { 
-  //Ecoute de l'event click du formulaire
-  if(checkPanier() == true && checkInput() != null){
-    //Création de l'objet à envoyer
-    let objet = {
-      contact,
-      products
-    };
-    console.log("Administration : " + objet);
-    let objetRequest = JSON.stringify(objet);
-    console.log("Administration : " + objetRequest);
-    //Envoi de l'objet via la function
-    envoiDonnees(objetRequest);
-    //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-    contact = {};
-    products = [];
-    localStorage.clear();
-  }else{
-    console.log("Administration : ERROR");
-  };
+  let btnForm = document.getElementById("envoiPost");
+    btnForm.addEventListener("click", function(){
+      //Lancement des verifications du panier et du form => si Ok envoi
+      if(checkPanier() == true && checkInput() != null){
+      	console.log("Administration : L'envoi peut etre fait");
+      //Création de l'objet à envoyer
+      let objet = {
+      	contact,
+      	products
+      };
+      console.log("Administration : " + objet);
+     //Conversion en JSON
+     let objetRequest = JSON.stringify(objet);
+     console.log("Administration : " + objetRequest);
+     //Envoi de l'objet via la function
+     envoiDonnees(objetRequest);
+
+     //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+     contact = {};
+     products = [];
+     localStorage.clear();
+ }else{
+ 	console.log("Administration : ERROR");
+ };
+});
 };
+
+resultOrder = () =>{
+	if(sessionStorage.getItem("order") != null){
+    //Parse du session storage
+    let order = JSON.parse(sessionStorage.getItem("order"));
+    //Implatation de prénom et de id de commande dans le html sur la page de confirmation
+    document.getElementById("lastName").innerHTML = order.contact.lastName
+    document.getElementById("orderId").innerHTML = order.orderId
+    
+    //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
+    sessionStorage.removeItem("order");
+    }else{
+      //avertissement et redirection vers l'accueil
+      alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+      window.open("./index.html");
+    }
+}
