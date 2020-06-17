@@ -318,6 +318,7 @@ envoiDonnees = (objetRequest) => {
       document.forms["form-panier"].submit();
 
       resolve(JSON.parse(this.responseText));
+      window.location = "./confirmation.html";
     } else {
       alert("Problème avec l'envoi des données");
     }
@@ -342,24 +343,25 @@ validForm = () => {
       };
       console.log("Administration : " + objet);
      //Conversion en JSON
-     let objetRequest = JSON.stringify(objet);
-     console.log("Administration : " + objetRequest);
-     //Envoi de l'objet via la function
-     envoiDonnees(objetRequest);
+      let objetRequest = JSON.stringify(objet);
+      console.log("Administration : " + objetRequest);
+      //Envoi de l'objet via la function
+      envoiDonnees(objetRequest);
 
-     //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-     contact = {};
-     products = [];
-     localStorage.clear();
+      //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+      contact = {};
+      products = [];
+      localStorage.clear();
  }else{
  	console.log("Administration : ERROR");
  };
 });
 };
 
-resultOrder = () =>{
+resultOrder = () => {
 	if(sessionStorage.getItem("order") != null){
     //Parse du session storage
+    //document.location = "./confirmation.html";
     let order = JSON.parse(sessionStorage.getItem("order"));
     //Implatation de prénom et de id de commande dans le html sur la page de confirmation
     document.getElementById("lastName").innerHTML = order.contact.lastName
@@ -370,6 +372,6 @@ resultOrder = () =>{
     }else{
       //avertissement et redirection vers l'accueil
       alert("Aucune commande passée, vous êtes arrivé ici par erreur");
-      window.open("./index.html");
+      window.location = "./index.html";
     }
 }
