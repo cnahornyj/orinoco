@@ -240,11 +240,11 @@ checkInput = () => {
     let checkMessage = "";
 
     //Récupération des inputs
-    let formNom = document.getElementById("formNom").value;
-    let formPrenom = document.getElementById("formPrenom").value;
-    let formMail = document.getElementById("formMail").value;
-    let formAdresse = document.getElementById("formAdresse").value;
-    let formVille = document.getElementById("formVille").value;
+    let formNom = document.getElementById("name").value;
+    let formPrenom = document.getElementById("firstname").value;
+    let formMail = document.getElementById("email").value;
+    let formAdresse = document.getElementById("address").value;
+    let formVille = document.getElementById("city").value;
 
 
     // Test des différents input du formulaire
@@ -289,60 +289,57 @@ checkInput = () => {
 };
 
 checkPanier = () => {
-  // Vérifier qu'il y ait au moins un produit dans le panier
   let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
-  // Si le panier est vide ou null (suppression localStorage par)=>alerte
-  if(etatPanier == null){
-	//Si l'utilisateur à supprimer son localStorage etatPanier sur la page panier.html et qu'il continue le process de commande
-	alert("Il y a eu un problème avec votre panier, une action non autorisée a été faite. Veuillez recharger la page pour la corriger");
-	return false;
-  } else if(etatPanier.length < 1) {
+  if(etatPanier.length < 1) {
     alert("Votre panier est vide");
     return false;
   } else {
-	console.log("Administration : Le panier n'est pas vide")
-  // Si le panier n'est pas vide on remplit le products envoyé à l'API
-  JSON.parse(localStorage.getItem("userBasket")).forEach((produit) =>{
-    products.push(produit._id);
-  });
-  console.log("Administration : Le tableau envoyé à l'API contiendra les id de produit(s) suivant(s) : " + products)
-  return true;
+    console.log("Administration : Le panier n'est pas vide")
+    // Si le panier n'est pas vide on remplit le products envoyé à l'API
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) =>{
+      products.push(produit._id);
+    });
+    console.log("Administration : Le tableau envoyé à l'API contiendra les id de produit(s) suivant(s) : " + products)
+    return true;
   }
 };
 
-//Au click sur le btn de validation du formulaire
+envoiDonnees = (objetRequest) => {
+  console.log(objetRequest)
+  return new Promise((resolve)=>{
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
+      {
+        sessionStorage.setItem("order", this.responseText);
+    } else {
+      alert("Problème avec l'envoi des données");
+    }
+};
+request.open("POST", APIURL + "order");
+request.setRequestHeader("Content-Type", "application/json");
+request.send(objetRequest);
+});
+};
+
+  //Au click sur le btn de validation du formulaire
 validForm = () => { 
   //Ecoute de l'event click du formulaire
-  if(checkPanier() == true && checkInput() == true){
-    console.log("Administration : L'envoi peut etre fait");
+  if(checkPanier() == true && checkInput() != null){
     //Création de l'objet à envoyer
     let objet = {
       contact,
       products
     };
     console.log("Administration : " + objet);
-    //Conversion en JSON
     let objetRequest = JSON.stringify(objet);
     console.log("Administration : " + objetRequest);
     //Envoi de l'objet via la function
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
-      {
-        //Sauvegarde du retour de l'API dans la sessionStorage pour affichage dans order-confirm.html
-        sessionStorage.setItem("order", this.responseText);
-        resolve(JSON.parse(this.responseText));
-    } else {
-      alert("Problème avec l'envoi des données");
-    }
-    };
-    request.open("POST", APIURL + "order");
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(objetRequest);
+    envoiDonnees(objetRequest);
     //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-    //contact = {};
-    //products = [];
-    //localStorage.clear();
+    contact = {};
+    products = [];
+    localStorage.clear();
   }else{
     console.log("Administration : ERROR");
   };

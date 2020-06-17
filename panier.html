@@ -29,18 +29,23 @@
 				<fieldset>
 					<legend>Civilité</legend>
 						<label for="formNom">Nom</label></br>
-						<input type="text" id="formNom" required name="formNom">
+						<input type="text" id="name"></br>
+						<span id="oublisNom"></span>
 						<label for="formPrenom" class="right-inline">Prénom</label></br>
-						<input type="text" id="formPrenom" required name="formPrenom">
+						<input type="text" id="firstname"></br>
+						<span id="oublisPrenom"></span>
 				</fieldset> 
 				<fieldset>
 					<legend>Coordonnées</legend>
 						<label for="formMail">E-mail</label></br>
-						<input type="email" id="formMail" required name="formMail">
+						<input type="email" id="email"></br>
+						<span id="oublisEmail"></span>
 						<label for="formAdresse">Adresse</label></br>
-						<input type="text" id="formAdresse" required name="formAdresse">
+						<input type="text" id="address"></br>
+						<span id="oublisAdres"></span>
 						<label for="formVille">Ville</label></br>
-						<input type="text" id="formVille" required name="formVille">
+						<input type="text" id="city"></br>
+						<span id="oublisVille"></span>
 				</fieldset> 
 				<input type="submit" value="Je valide mon panier et mes informations" id="envoiPost" onclick="validForm()">
 			</form>
@@ -56,8 +61,6 @@
             </ul>
         </nav>
     </footer>
-    <script src="js/test.js"></script>
-    <script>
-		addition();
-	</script>
+	<script src="js/test.js"></script>
+	<script>addition()</script>
 </body>
