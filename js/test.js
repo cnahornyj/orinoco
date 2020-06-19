@@ -19,7 +19,7 @@ let products = [];
 // L'utilisateur a maintenant un panier
 let userBasket = JSON.parse(localStorage.getItem("userBasket"));
 
-getProduits = () => {
+function getProduits(){
 	return new Promise((resolve) => {
 		let request = new XMLHttpRequest();
 		request.onreadystatechange = function() {
@@ -118,7 +118,7 @@ async function detailProduit(){
     });
 };
 
-addPanier = () => {
+function addPanier(){
         // Au clic de l'user pour mettre le produit dans le panier
         let inputBuy = document.getElementById("add_product");
         inputBuy.addEventListener("click", async function() {
@@ -138,7 +138,7 @@ addPanier = () => {
     });
 };
 
-addition = () => {
+function addition(){
     // Vérifie si un produit est dans le panier
     if(JSON.parse(localStorage.getItem("userBasket")).length > 0){
       // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
@@ -215,7 +215,7 @@ addition = () => {
   };
 }
 
-annulerProduit = (i) => {
+function annulerProduit(i){
     console.log(`Administration : Enlever le produit à l'index ${i}`);
     // Recupérer le array
     userBasket.splice(i, 1); 
@@ -230,7 +230,7 @@ annulerProduit = (i) => {
     window.location.reload();
 };
 
-checkInput = () => {
+function checkInput(){
     //Controle Regex
     let checkString = /^[A-Z]{1}[a-z]/;
     let checkMail = /.+@.+\..+/;
@@ -288,77 +288,66 @@ checkInput = () => {
     };
 };
 
-checkPanier = () => {
+function checkPanier(){
   let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
   if(etatPanier.length < 1) {
     alert("Votre panier est vide");
     return false;
   } else {
-    console.log("Administration : Le panier n'est pas vide")
-    // Si le panier n'est pas vide on remplit le products envoyé à l'API
-    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) =>{
+    console.log("Le panier est rempli");
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
       products.push(produit._id);
     });
-    console.log("Administration : Le tableau envoyé à l'API contiendra les id de produit(s) suivant(s) : " + products)
+    console.log("Le tableau envoyé à l'API contiendra les id de produit(s) suivant(s) : " + products)
     return true;
   }
 };
 
+/*
+//Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+contact = {};
+products = [];
+localStorage.clear();
+*/
+
 envoiDonnees = (objetRequest) => {
-  console.log(objetRequest)
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
     let request = new XMLHttpRequest();
+    request.open('POST', APIURL + "order", true);
+    request.setRequestHeader("Content-type", "application/json");
     request.onreadystatechange = function() {
-      if(this.readyState == XMLHttpRequest.DONE && this.status == 201) 
-      {
-      sessionStorage.setItem("order", this.responseText);
-
-      //Chargement de la page de confirmation
-      document.forms["form-panier"].action = './confirmation.html';
-      document.forms["form-panier"].submit();
-
-      resolve(JSON.parse(this.responseText));
-      window.location = "./confirmation.html";
-    } else {
-      alert("Problème avec l'envoi des données");
+        if(this.readyState == 4 && this.status == 201) {
+          resolve(JSON.parse(this.responseText));
+          window.location = "./confirmation.html";
+          //contact = {};
+          //products = [];
+          //localStorage.clear();
+        } else {
+          alert("Error with data");
+        }
     }
-};
-request.open("POST", APIURL + "order");
-request.setRequestHeader("Content-Type", "application/json");
-request.send(objetRequest);
-});
-};
+    request.send(objetRequest);  
+  }
+)};
 
-  //Au click sur le btn de validation du formulaire
-validForm = () => { 
-  let btnForm = document.getElementById("envoiPost");
-    btnForm.addEventListener("click", function(){
-      //Lancement des verifications du panier et du form => si Ok envoi
-      if(checkPanier() == true && checkInput() != null){
-      	console.log("Administration : L'envoi peut etre fait");
-      //Création de l'objet à envoyer
+//Au clic sur le bouton de validation du formulaire et du panier
+function validForm(){ 
+    if(checkPanier() == true && checkInput() != null){
       let objet = {
-      	contact,
-      	products
+        contact,
+        products
       };
-      console.log("Administration : " + objet);
-     //Conversion en JSON
       let objetRequest = JSON.stringify(objet);
+      console.log("Administration : L'envoi peut etre fait");
       console.log("Administration : " + objetRequest);
-      //Envoi de l'objet via la function
       envoiDonnees(objetRequest);
-
-      //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-      contact = {};
-      products = [];
-      localStorage.clear();
- }else{
- 	console.log("Administration : ERROR");
- };
-});
+    }else{
+      console.log("Administration : ERROR");
+    };
 };
 
-resultOrder = () => {
+/*
+function resultOrder(){
 	if(sessionStorage.getItem("order") != null){
     //Parse du session storage
     //document.location = "./confirmation.html";
@@ -369,9 +358,10 @@ resultOrder = () => {
     
     //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
     sessionStorage.removeItem("order");
-    }else{
-      //avertissement et redirection vers l'accueil
-      alert("Aucune commande passée, vous êtes arrivé ici par erreur");
-      window.location = "./index.html";
-    }
+  }else{
+    //avertissement et redirection vers l'accueil
+    alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+    window.location = "./index.html";
+  }
 }
+*/
