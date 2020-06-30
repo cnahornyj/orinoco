@@ -343,9 +343,18 @@ color: #41372f;
 transform: scale(1.15);    
 }
 
-
 #order_result {
 text-align: center;
+font-size: 150%;
+color: #4c4138;
+background-color: white;
+border: 1px solid grey;
+border-radius: 1%;
+width: 50%;
+margin: auto;
+margin-top: 5%;
+margin-bottom: 5%;
+padding: 5% 0 5% 0;
 }
 /* Partie responsive */
 

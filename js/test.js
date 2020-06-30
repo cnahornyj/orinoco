@@ -3,20 +3,17 @@ const APIURL = "http://localhost:3000/api/" + produitSell + "/";
 
 let idProduit = "";
 
-if (localStorage.getItem("userBasket")) {
+if(localStorage.getItem("userBasket")) {
 	console.log("Administration : le panier de l'utilisateur existe déjà dans le localStorage");
-} else {
+}else{
 	console.log("Administration : Le panier n'existe pas, il va être créer et envoyer dans le localStorage");
-  	// Le panier est un tableau de produits
-  	let panierInit = [];
-  	localStorage.setItem("userBasket", JSON.stringify(panierInit));
+  let panierInit = [];
+  localStorage.setItem("userBasket", JSON.stringify(panierInit));
 };
 
-// Tableau et objet demandés pour la commande
 let contact;
 let products = [];
 
-// L'utilisateur a maintenant un panier
 let userBasket = JSON.parse(localStorage.getItem("userBasket"));
 
 function getProduits(){
@@ -149,7 +146,6 @@ function addition(){
       let ligneTableau = document.createElement("tr");
       let colonneNom = document.createElement("th");
       let colonnePrixUnitaire = document.createElement("th");
-      let colonneRemove = document.createElement("th");
       let ligneTotal = document.createElement("tr");
       let colonneRefTotal = document.createElement("th");
       let colonnePrixPaye = document.createElement("td");
@@ -180,7 +176,7 @@ function addition(){
         removeProduit.setAttribute("id", "remove"+i);
         removeProduit.setAttribute('class', "fas fa-trash-alt annulerProduit");
         // Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
-        // bind permet de garder l'incrementation du i qui représente l'index tu panier au moment de la création de l'event
+        // bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
         // annulerProduit L233
         removeProduit.addEventListener('click', annulerProduit.bind(i));
         i++;
@@ -231,137 +227,111 @@ function annulerProduit(i){
 };
 
 function checkInput(){
-    //Controle Regex
-    let checkString = /^[A-Z]{1}[a-z]/;
-    let checkMail = /.+@.+\..+/;
-    let checkAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
 
-    //message fin de controle
-    let checkMessage = "";
+  let checkString = /^[A-Z]{1}[a-z]/;
+  let checkMail = /.+@.+\..+/;
+  let checkAdresse = /^[^@&"()!_$*€£`%+=\/;?#]+$/;
 
-    //Récupération des inputs
-    let formNom = document.getElementById("name").value;
-    let formPrenom = document.getElementById("firstname").value;
-    let formMail = document.getElementById("email").value;
-    let formAdresse = document.getElementById("address").value;
-    let formVille = document.getElementById("city").value;
+  let formNom = document.getElementById("formNom").value;
+  let formPrenom = document.getElementById("formPrenom").value;
+  let formMail = document.getElementById("formMail").value;
+  let formAdresse = document.getElementById("formAdresse").value;
+  let formVille = document.getElementById("formVille").value;
 
-
-    // Test des différents input du formulaire
-    if(checkString.test(formNom) == false){
-      checkMessage = "Pour votre nom : renseigner une majuscule puis des minuscules";
-    }else{
-      console.log("Administration : Nom ok");
-    };
-    if(checkString.test(formPrenom) == false){
-      checkMessage = checkMessage + "\n" + "Pour votre prénom : renseigner une majuscule puis des minuscules";
-    }else{
-      console.log("Administration : Prénom ok");
-    };
-    if(checkMail.test(formMail) == false){
-      checkMessage = checkMessage + "\n" + "Votre email doit être au format xxxx@yyy.zzz";
-    }else{
-      console.log("Administration : Adresse mail ok");
-    };
-    if(checkAdresse.test(formAdresse) == false){
-      checkMessage = checkMessage + "\n" + `Dans votre adresse : l'un ou plusieurs des caractères suivants sont interdits [^@&"()!_$*€£%+=`;
-    }else{
-      console.log("Administration : Adresse ok");
-    };
-    if(checkString.test(formVille) == false){
-      checkMessage = checkMessage + "\n" + "Pour le nom de votre ville : renseigner une majuscule puis des minuscules";
-    }else{
-      console.log("Administration : Ville ok")
-    };
-    // Si un des champs n'est pas bon => message d'alert avec la raison
-    if(checkMessage != ""){
-      alert("ATTENTION" + "\n" + checkMessage);
-    } else {
-      contact = {
-        firstName: formNom,
-        lastName: formPrenom,
-        address: formAdresse,
-        city: formVille,
-        email: formMail
-      };
+  if(checkString.test(formNom)==false){
+    alert("error with your name");
+    return false;
+  } else if(checkString.test(formPrenom)==false) {
+    alert("error with your firstname");
+    return false;
+  } else if(checkMail.test(formMail)==false){
+    alert("error with your mail");
+    return false;
+  } else if(checkAdresse.test(formAdresse)==false){
+    alert("error with your address");
+    return false;
+  } else if(checkString.test(formVille)==false){
+    alert("error with your city");
+    return false;
+  } else {
     return true;
-    };
+  };
 };
 
 function checkPanier(){
   let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
-  if(etatPanier.length < 1) {
-    alert("Votre panier est vide");
+  if(etatPanier == null){
+    alert("Il y a eu un problème avec votre panier, une action non autorisée a été faite. Veuillez recharger la page pour la corriger");
     return false;
-  } else {
-    console.log("Le panier est rempli");
+  }else{
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
-      products.push(produit._id);
+    products.push(produit._id);
     });
-    console.log("Le tableau envoyé à l'API contiendra les id de produit(s) suivant(s) : " + products)
     return true;
   }
 };
 
-/*
-//Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
-contact = {};
-products = [];
-localStorage.clear();
-*/
-
-envoiDonnees = (objetRequest) => {
-  return new Promise((resolve) => {
-    let request = new XMLHttpRequest();
-    request.open('POST', APIURL + "order", true);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 201) {
-          resolve(JSON.parse(this.responseText));
-          window.location = "./confirmation.html";
-          //contact = {};
-          //products = [];
-          //localStorage.clear();
-        } else {
-          alert("Error with data");
-        }
-    }
-    request.send(objetRequest);  
-  }
-)};
-
-//Au clic sur le bouton de validation du formulaire et du panier
-function validForm(){ 
-    if(checkPanier() == true && checkInput() != null){
+function validForm(){
+  let btnForm = document.getElementById("envoiPost");
+  btnForm.addEventListener("click", function(event){
+    event.preventDefault();
+    if(checkPanier() == true && checkInput() == true){
+      let contact = {
+        firstName: document.getElementById("formNom").value,
+        lastName: document.getElementById("formPrenom").value,
+        address: document.getElementById("formMail").value,
+        city: document.getElementById("formAdresse").value,
+        email: document.getElementById("formVille").value
+      }
       let objet = {
         contact,
         products
       };
       let objetRequest = JSON.stringify(objet);
-      console.log("Administration : L'envoi peut etre fait");
-      console.log("Administration : " + objetRequest);
-      envoiDonnees(objetRequest);
+      var request = new XMLHttpRequest();
+      request.open("POST", "http://localhost:3000/api/furniture/order");
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest.DONE){
+        console.log(this.responseText);
+        localStorage.setItem('order', this.responseText);
+        window.location.href = "confirmation.html";
+        }
+      }
+      request.send(objetRequest);
     }else{
       console.log("Administration : ERROR");
     };
+  });
 };
 
-/*
 function resultOrder(){
-	if(sessionStorage.getItem("order") != null){
-    //Parse du session storage
-    //document.location = "./confirmation.html";
-    let order = JSON.parse(sessionStorage.getItem("order"));
-    //Implatation de prénom et de id de commande dans le html sur la page de confirmation
-    document.getElementById("lastName").innerHTML = order.contact.lastName
-    document.getElementById("orderId").innerHTML = order.orderId
-    
-    //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
-    sessionStorage.removeItem("order");
-  }else{
-    //avertissement et redirection vers l'accueil
-    alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+if(localStorage.getItem("order") != null){
+  let order = JSON.parse(localStorage.getItem("order"));
+  document.getElementById("firstName").innerHTML = order.contact.firstName;
+  document.getElementById("lastName").innerHTML = order.contact.lastName;
+  let priceOrder = 0;
+  let displayPrice = order.products;
+  displayPrice.forEach((element) =>{
+    priceOrder += element.price / 100;
+  });
+  document.getElementById("priceOrder").innerHTML = priceOrder;
+  document.getElementById("orderId").innerHTML = order.orderId;
+  setTimeout(function() {
+    localStorage.removeItem("order");
+    localStorage.clear();
+    let products = [];
+    let contact;
     window.location = "./index.html";
+  },7000);
+}else{
+  //alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+  let order = document.getElementById("order_result");
+  let error = createElement("i");
+  error.setAttribute("class","fas fa-exclamation-triangle fa-5x");
+  order.appendChild(error);
+  // error message
+  // setTimeOut after 3 seconds redirection to index.html
+  window.open("./index.html");
   }
 }
-*/
