@@ -41,62 +41,61 @@ function getProduits(){
 };
 
 async function allProductsList(){
-    const produits = await getProduits();
+  const produits = await getProduits();
 
-    //Création de la section accueillant la liste des produits
-    let listProduct = document.createElement("section");
-    listProduct.setAttribute("id", "list-articles");
-    //Ajout de la section dans le HTML
-    let main = document.getElementById("main");
-    main.appendChild(listProduct);
+  //Création de la section accueillant la liste des produits
+  let listProduct = document.createElement("section");
+  listProduct.setAttribute("id", "list-articles");
+  //Ajout de la section dans le HTML
+  let main = document.getElementById("main");
+  main.appendChild(listProduct);
 
-    //Pour chaque produit de l'API on créé l'encadré HTML du produit
-    produits.forEach((produit) =>
-    { 
-        // Création du HTML
-        let bloc = document.createElement("article");
-        let blocPhoto = document.createElement("div");
-        let imageArticle = document.createElement("img");
-        let blocDescription = document.createElement("div");
-        let blocGauche = document.createElement("div");
-        let nomArticle = document.createElement("p");
-        let description = document.createElement("p");
-        let blocDroit = document.createElement("div");
-        let prix = document.createElement("p");
-        let lienArticle = document.createElement("a");
-        // Attribution des classes
-        bloc.setAttribute("class","article");
-        blocPhoto.setAttribute("class","bloc_photo");
-        imageArticle.setAttribute("class", "img_article");
-        blocDescription.setAttribute("class","bloc_description");
-        blocGauche.setAttribute("class", "bloc_gauche"); 
-        nomArticle.setAttribute("class","name_article");
-        description.setAttribute("class","description_article");
-        blocDroit.setAttribute("class","bloc_droit");
-        prix.setAttribute("class","price_article");
-        lienArticle.setAttribute("class", "selection_article");
-        lienArticle.setAttribute("href", "produit.html?id=" + produit._id);
-        // Hiérarchie dans les éléments créés
-        listProduct.appendChild(bloc);
-        bloc.appendChild(blocPhoto);
-        blocPhoto.appendChild(imageArticle);
-        bloc.appendChild(blocDescription);
-        blocDescription.appendChild(blocGauche);
-        blocGauche.appendChild(nomArticle);
-        blocGauche.appendChild(description);
-        blocDescription.appendChild(blocDroit);
-        blocDroit.appendChild(prix);
-        blocDroit.appendChild(lienArticle);
-        // Remplissage du contenu des balises
-        imageArticle.src = produit.imageUrl;
-        nomArticle.textContent = produit.name;
-        description.textContent = produit.description;
-        prix.textContent = produit.price/100 + ",00€";
-        lienArticle.textContent = "Découvrir";
+//Pour chaque produit de l'API on créé l'encadré HTML du produit
+  produits.forEach((produit) => { 
+    // Création du HTML
+    let bloc = document.createElement("article");
+    let blocPhoto = document.createElement("div");
+    let imageArticle = document.createElement("img");
+    let blocDescription = document.createElement("div");
+    let blocGauche = document.createElement("div");
+    let nomArticle = document.createElement("p");
+    let description = document.createElement("p");
+    let blocDroit = document.createElement("div");
+    let prix = document.createElement("p");
+    let lienArticle = document.createElement("a");
+    // Attribution des classes
+    bloc.setAttribute("class","article");
+    blocPhoto.setAttribute("class","bloc_photo");
+    imageArticle.setAttribute("class", "img_article");
+    blocDescription.setAttribute("class","bloc_description");
+    blocGauche.setAttribute("class", "bloc_gauche"); 
+    nomArticle.setAttribute("class","name_article");
+    description.setAttribute("class","description_article");
+    blocDroit.setAttribute("class","bloc_droit");
+    prix.setAttribute("class","price_article");
+    lienArticle.setAttribute("class", "selection_article");
+    lienArticle.setAttribute("href", "produit.html?id=" + produit._id);
+    // Hiérarchie dans les éléments créés
+    listProduct.appendChild(bloc);
+    bloc.appendChild(blocPhoto);
+    blocPhoto.appendChild(imageArticle);
+    bloc.appendChild(blocDescription);
+    blocDescription.appendChild(blocGauche);
+    blocGauche.appendChild(nomArticle);
+    blocGauche.appendChild(description);
+    blocDescription.appendChild(blocDroit);
+    blocDroit.appendChild(prix);
+    blocDroit.appendChild(lienArticle);
+    // Remplissage du contenu des balises
+    imageArticle.src = produit.imageUrl;
+    nomArticle.textContent = produit.name;
+    description.textContent = produit.description;
+    prix.textContent = produit.price/100 + ",00€";
+    lienArticle.textContent = "Découvrir";
   });
 };
 
-async function detailProduit(){
+async function productDetails(){
         //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
         idProduit = location.search.substring(4);
         const produitSelected = await getProduits();
@@ -115,7 +114,7 @@ async function detailProduit(){
     });
 };
 
-function addPanier(){
+function addProduct(){
         // Au clic de l'user pour mettre le produit dans le panier
         let inputBuy = document.getElementById("add_product");
         inputBuy.addEventListener("click", async function() {
@@ -130,88 +129,88 @@ function addPanier(){
         function add_done_remove(){
             document.getElementById("add_done").textContent="";
         }
-        window.setTimeout(add_done_remove, 4000);
+        window.setTimeout(add_done_remove, 2000);
         // console.log(produits);
     });
 };
 
 function addition(){
-    // Vérifie si un produit est dans le panier
-    if(JSON.parse(localStorage.getItem("userBasket")).length > 0){
-      // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
-      document.getElementById("empty_basket").remove();
+  // Vérifie si un produit est dans le panier
+  if(JSON.parse(localStorage.getItem("userBasket")).length > 0){
+    // S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
+    document.getElementById("empty_basket").remove();
 
-      //Création de la structure principale du tableau  
-      let facture = document.createElement("table");
-      let ligneTableau = document.createElement("tr");
-      let colonneNom = document.createElement("th");
-      let colonnePrixUnitaire = document.createElement("th");
-      let ligneTotal = document.createElement("tr");
-      let colonneRefTotal = document.createElement("th");
-      let colonnePrixPaye = document.createElement("td");
+    //Création de la structure principale du tableau  
+    let facture = document.createElement("table");
+    let ligneTableau = document.createElement("tr");
+    let colonneNom = document.createElement("th");
+    let colonnePrixUnitaire = document.createElement("th");
+    let ligneTotal = document.createElement("tr");
+    let colonneRefTotal = document.createElement("th");
+    let colonnePrixPaye = document.createElement("td");
 
-      //Placement de la structure dans la page et du contenu des entetes
-      let factureSection = document.getElementById("basket-resume");
-      factureSection.appendChild(facture);
-      facture.appendChild(ligneTableau);
-      ligneTableau.appendChild(colonneNom);
-      colonneNom.textContent = "Nom du produit";
-      ligneTableau.appendChild(colonnePrixUnitaire);
-      colonnePrixUnitaire.textContent = "Prix du produit";
+    //Placement de la structure dans la page et du contenu des entetes
+    let factureSection = document.getElementById("basket-resume");
+    factureSection.appendChild(facture);
+    facture.appendChild(ligneTableau);
+    ligneTableau.appendChild(colonneNom);
+    colonneNom.textContent = "Nom du produit";
+    ligneTableau.appendChild(colonnePrixUnitaire);
+    colonnePrixUnitaire.textContent = "Prix du produit";
 
-      // Pour chaque produit du panier, on créé une ligne avec le nom et le prix
-      
-      // init de l'incrémentation de l'id des lignes pour chaque produit
-      let i = 0;
-      
-      JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
-        //Création de la ligne
-        let ligneProduit = document.createElement("tr");
-        let nomProduit = document.createElement("td");
-        let prixUnitProduit = document.createElement("td");
-        let removeProduit = document.createElement("i");
+    // Pour chaque produit du panier, on créé une ligne avec le nom et le prix
+    
+    // init de l'incrémentation de l'id des lignes pour chaque produit
+    let i = 0;
+    
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
+      //Création de la ligne
+      let ligneProduit = document.createElement("tr");
+      let nomProduit = document.createElement("td");
+      let prixUnitProduit = document.createElement("td");
+      let removeProduit = document.createElement("i");
 
-        // Attribution des class pour le css
-        ligneProduit.setAttribute("id", "produit"+i);
-        removeProduit.setAttribute("id", "remove"+i);
-        removeProduit.setAttribute('class', "fas fa-trash-alt annulerProduit");
-        // Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
-        // bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
-        // annulerProduit L233
-        removeProduit.addEventListener('click', annulerProduit.bind(i));
-        i++;
+      // Attribution des class pour le css
+      ligneProduit.setAttribute("id", "produit"+i);
+      removeProduit.setAttribute("id", "remove"+i);
+      removeProduit.setAttribute('class', "fas fa-trash-alt removeProduct");
+      // Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
+      // bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
+      // annulerProduit L233
+      removeProduit.addEventListener('click', removeProduct.bind(i));
+      i++;
 
-        // Insertion dans le HTML
-        facture.appendChild(ligneProduit);
-        ligneProduit.appendChild(nomProduit);
-        ligneProduit.appendChild(prixUnitProduit);
-        ligneProduit.appendChild(removeProduit);
+      // Insertion dans le HTML
+      facture.appendChild(ligneProduit);
+      ligneProduit.appendChild(nomProduit);
+      ligneProduit.appendChild(prixUnitProduit);
+      ligneProduit.appendChild(removeProduit);
 
-        // Contenu des lignes
-        nomProduit.innerHTML = produit.name;
-        prixUnitProduit.textContent = produit.price / 100 + " €";
+      // Contenu des lignes
+      nomProduit.innerHTML = produit.name;
+      prixUnitProduit.textContent = produit.price / 100 + " €";
+  });
+
+    // Dernière ligne du tableau : Total
+    facture.appendChild(ligneTotal);
+    ligneTotal.appendChild(colonneRefTotal);
+    colonneRefTotal.textContent = "Total à payer";
+    ligneTotal.appendChild(colonnePrixPaye);
+    colonnePrixPaye.setAttribute("id", "total_sum");
+
+    // Calcul du montant total
+    let totalPaye = 0;
+    JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
+      totalPaye += produit.price / 100;
     });
 
-      // Dernière ligne du tableau : Total
-      facture.appendChild(ligneTotal);
-      ligneTotal.appendChild(colonneRefTotal);
-      colonneRefTotal.textContent = "Total à payer";
-      ligneTotal.appendChild(colonnePrixPaye);
-      colonnePrixPaye.setAttribute("id", "total_sum");
-
-      // Calcul du montant total
-      let totalPaye = 0;
-      JSON.parse(localStorage.getItem("userBasket")).forEach((produit)=>{
-      	totalPaye += produit.price / 100;
-      });
-
-      // Affichage du prix total à payer
-      console.log(`Total à payer : ${totalPaye}€`);
-      document.getElementById("total_sum").textContent = `${totalPaye},00€`;
+    // Affichage du prix total à payer
+    console.log(`Total à payer : ${totalPaye}€`);
+    document.getElementById("total_sum").textContent = `${totalPaye},00€`;
   };
 }
 
-function annulerProduit(i){
+function removeProduct(i){
     console.log(`Administration : Enlever le produit à l'index ${i}`);
     // Recupérer le array
     userBasket.splice(i, 1); 
@@ -239,29 +238,29 @@ function checkInput(){
   let formVille = document.getElementById("formVille").value;
 
   if(checkString.test(formNom)==false){
-    alert("error with your name");
+    alert("Votre nom doit commencer par une majuscule suivis de minuscules");
     return false;
   } else if(checkString.test(formPrenom)==false) {
-    alert("error with your firstname");
+    alert("Votre prénom doit commencer par une majuscule suivis de minuscules");
     return false;
   } else if(checkMail.test(formMail)==false){
-    alert("error with your mail");
+    alert("Votre email doit être au format xxx@yyy.zzz");
     return false;
   } else if(checkAdresse.test(formAdresse)==false){
-    alert("error with your address");
+    alert(`Votre adresse contient un ou plusieurs des caractères interdits suivants : `+ '[^@&"()!_$*€£`%+=\/;?#]' + " ou n'est pas renseignée." );
     return false;
   } else if(checkString.test(formVille)==false){
-    alert("error with your city");
+    alert("Le nom de votre ville doit commencer par une majuscule suivis de minuscules");
     return false;
   } else {
     return true;
   };
 };
 
-function checkPanier(){
+function checkBasket(){
   let etatPanier = JSON.parse(localStorage.getItem("userBasket"));
-  if(etatPanier == null){
-    alert("Il y a eu un problème avec votre panier, une action non autorisée a été faite. Veuillez recharger la page pour la corriger");
+  if(etatPanier.length < 1 || etatPanier == null){
+    alert("Votre panier est vide !");
     return false;
   }else{
     JSON.parse(localStorage.getItem("userBasket")).forEach((produit) => {
@@ -271,11 +270,11 @@ function checkPanier(){
   }
 };
 
-function validForm(){
-  let btnForm = document.getElementById("envoiPost");
+function validOrder(){
+  let btnForm = document.getElementById("sendPost");
   btnForm.addEventListener("click", function(event){
     event.preventDefault();
-    if(checkPanier() == true && checkInput() == true){
+    if(checkBasket() == true && checkInput() == true){
       let contact = {
         firstName: document.getElementById("formNom").value,
         lastName: document.getElementById("formPrenom").value,
@@ -325,13 +324,21 @@ if(localStorage.getItem("order") != null){
     window.location = "./index.html";
   },7000);
 }else{
-  //alert("Aucune commande passée, vous êtes arrivé ici par erreur");
   let order = document.getElementById("order_result");
-  let error = createElement("i");
-  error.setAttribute("class","fas fa-exclamation-triangle fa-5x");
-  order.appendChild(error);
-  // error message
-  // setTimeOut after 3 seconds redirection to index.html
-  window.open("./index.html");
+  order.remove();
+  let resultCommand = document.getElementById("confirmation_commande");
+  let resultCommandError = document.createElement("div");
+  resultCommandError.setAttribute("id","order_result_error");
+  let iconError = document.createElement("i");
+  iconError.setAttribute("class","fas fa-exclamation-triangle fa-5x");
+  iconError.setAttribute("id","error_logo");
+  let messageError = document.createElement("p");
+  messageError.innerHTML = "Aucune commande passée, vous êtes arrivé(e) ici par erreur !";
+  resultCommand.appendChild(resultCommandError);
+  resultCommandError.appendChild(iconError);
+  resultCommandError.appendChild(messageError);
+  /*setTimeout(function() {
+    window.location = "./index.html";
+  },4500);*/
   }
 }
