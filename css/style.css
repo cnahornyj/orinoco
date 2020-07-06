@@ -147,6 +147,17 @@ margin-left: 8%;
 width: 60%;
 }
 
+#check_circle {
+color: #51bc7c;
+animation: alertdown 2000ms infinite;
+}
+    
+@keyframes alertdown {
+from, to { color: #51bc7c; }
+50%      { color: #46a06a; }
+90%      { color: #347a50; }
+}
+
 .name_article {
 border-bottom: 1px solid beige;
 }

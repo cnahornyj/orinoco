@@ -94,6 +94,7 @@ async function allProductsList(){
 async function productDetails(){
   // Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
   idProduit = location.search.substring(4);
+  // "http://localhost:3000/api/furniture/id"
   const produitSelected = await getProducts();
   console.log("Administration : Vous regardez la page du produit id_"+ produitSelected._id);
 
