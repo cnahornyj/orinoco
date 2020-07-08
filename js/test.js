@@ -170,7 +170,6 @@ function addition(){
       removeProduit.setAttribute("id", "remove"+i);
       removeProduit.setAttribute('class', "fas fa-trash-alt removeProduct");
       // Pour chaque produit créer un event sur l'icone de la corbeille pour annuler ce produit
-      // bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
       removeProduit.addEventListener('click', removeProduct.bind(i));
       i++;
 
